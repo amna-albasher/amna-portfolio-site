@@ -1,0 +1,32 @@
+---
+title: "AKS E-Commerce Platform"
+category: "Production Kubernetes Deployment"
+summary: "A production-grade e-commerce platform on Azure Kubernetes Service, with a multi-container architecture, Helm charts, and a full CI/CD pipeline through Azure DevOps."
+description: "A production-grade e-commerce platform on Azure Kubernetes Service, with a multi-container architecture, Helm charts, and a full CI/CD pipeline through Azure DevOps."
+tech: ["Kubernetes", "AKS", "Docker", "Helm", "Azure DevOps"]
+accent: "#8B5CF6"
+order: 5
+filters: ["Cloud", "DevOps"]
+github: "https://github.com/amna-albasher/ecommerce-devops-project"
+problem: [
+  "Deploying a multi-container e-commerce application to production needs a process that's repeatable and safe to run often. Manual container management across environments doesn't scale past the first few deployments, and it's easy for configuration to quietly diverge between environments."
+]
+approach: [
+  "Deployed the platform on Azure Kubernetes Service with a multi-container architecture managed through Helm charts, with the entire release process automated through an Azure DevOps CI/CD pipeline from build through deployment."
+]
+keyDecisions: [
+  "Helm charts package the multi-container setup so deployments are parameterized and consistent, not a series of manual `kubectl` commands per container.",
+  "Azure DevOps was chosen to keep the pipeline tightly integrated with the rest of the Azure-based infrastructure rather than introducing a separate CI tool."
+]
+architecture: "Azure DevOps pipeline builds container images, Helm charts define the multi-container deployment, and AKS runs the production workload."
+results: [
+  "Consistent, repeatable deployments to Kubernetes with no manual container orchestration.",
+  "The full release process, build, test, and deploy, runs through a single automated pipeline.",
+  "Configuration is defined in version-controlled Helm values rather than environment-specific manual setup."
+]
+draft: false
+terminalCommand: "deploy aks-ecommerce-platform"
+terminalLines: ["cluster provisioned", "Helm release deployed", "CI/CD pipeline synced"]
+---
+
+The AKS E-Commerce Platform is a production-grade e-commerce platform on Azure Kubernetes Service, with a multi-container architecture and a full CI/CD pipeline through Azure DevOps.

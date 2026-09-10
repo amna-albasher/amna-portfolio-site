@@ -1,0 +1,33 @@
+---
+title: "Terraform Enterprise Infrastructure"
+category: "Multi-Environment Azure IaC"
+summary: "Multi-environment Azure infrastructure provisioned entirely with Terraform, with separate dev, staging, and production workspaces, remote state, load balancing, VMs, and Azure Monitor integration."
+description: "Multi-environment Azure infrastructure provisioned entirely with Terraform, with separate dev, staging, and production workspaces, remote state, load balancing, VMs, and Azure Monitor integration."
+tech: ["Terraform", "Azure", "IaC", "Remote State", "Load Balancing"]
+accent: "#F59E0B"
+order: 3
+filters: ["Cloud"]
+github: "https://github.com/amna-albasher/azure-terraform-enterprise"
+problem: [
+  "Managing Azure infrastructure by hand across dev, staging, and production environments creates two compounding risks: environment drift, where staging quietly stops matching production, and a lack of auditability, with no clear record of who changed what, or why. Manual changes made directly in the Azure portal are also difficult to roll back cleanly if something goes wrong. As the number of resources grows, VMs, load balancers, monitoring integrations, the coordination cost of keeping environments consistent by hand grows with it."
+]
+approach: [
+  "Provisioned all three environments entirely with Terraform, using separate workspaces per environment so each can be planned and applied independently, with remote state enabling safe collaboration across a team rather than a single person holding local state files."
+]
+keyDecisions: [
+  "Remote state was a deliberate choice to make the setup team-safe rather than reliant on one person's machine.",
+  "Load balancing and VM provisioning are defined as code, so scaling or reconfiguring infrastructure is a reviewable pull request, not a manual console change.",
+  "Azure Monitor integration was included from the start so infrastructure health is visible without needing a separate observability project layered on top later."
+]
+architecture: "Terraform workspaces per environment feed a remote state backend, provisioning VMs and a load balancer, with Azure Monitor integration on top."
+results: [
+  "Infrastructure is version-controlled and reproducible across all three environments.",
+  "Changes go through review before reaching production, rather than being applied directly.",
+  "Environment drift between dev, staging, and production is eliminated since all three are defined from the same source."
+]
+draft: false
+terminalCommand: "apply terraform-enterprise-infra"
+terminalLines: ["dev workspace applied", "staging workspace applied", "production workspace applied"]
+---
+
+Terraform Enterprise Infrastructure is multi-environment Azure infrastructure provisioned entirely with Terraform, with separate dev, staging, and production workspaces.

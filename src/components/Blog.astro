@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => a.data.pubDate.getTime() - b.data.pubDate.getTime()
+);
+---
+
+<section id="blog" class="border-t border-line/70 bg-paper py-16">
+  <div class="mx-auto max-w-6xl px-6 lg:px-10">
+    <div class="reveal flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">Our Blog</p>
+        <h2 class="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-ink sm:text-5xl">
+          From the Blog
+        </h2>
+      </div>
+      <a
+        href="/blog"
+        class="text-sm font-semibold text-pink transition-transform hover:translate-x-1"
+      >
+        View all posts &rarr;
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <BlogCard post={post} class="reveal" />
+      ))}
+    </div>
+  </div>
+</section>

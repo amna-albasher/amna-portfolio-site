@@ -1,0 +1,165 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --color-ink: #16161a;
+  --color-ink-soft: #4a4a52;
+  --color-paper: #faf6f0;
+  --color-pink: #4c3ae3;
+  --color-pink-dark: #3b2bb8;
+  --color-pink-soft: #eae7fc;
+  --color-line: #e4dbcb;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body > main > section,
+body > footer {
+  position: relative;
+  isolation: isolate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -3px;
+  height: 2px;
+  background-color: var(--color-pink);
+  transition: right 0.25s ease;
+}
+
+.nav-link:hover::after {
+  right: 0;
+}
+
+.skill-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.placeholder-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.blog-cover-icon svg {
+  width: 34%;
+  height: 34%;
+  max-width: 88px;
+  max-height: 88px;
+  stroke-width: 1.25px;
+}
+
+.ghost-number {
+  color: var(--color-pink);
+  opacity: 0.55;
+}
+
+.prose {
+  --tw-prose-body: var(--color-ink-soft);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-links: var(--color-pink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-bullets: var(--color-pink);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-pink);
+  --tw-prose-code: var(--color-ink);
+}
+
+.prose h2,
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.prose a {
+  font-weight: 600;
+  text-decoration-color: var(--color-pink);
+}
+
+.prose code {
+  font-weight: 500;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.prose :not(pre) > code {
+  background: #f1e9dd;
+  border-radius: 0.3em;
+  padding: 0.15em 0.4em;
+}
+
+.prose pre {
+  border-radius: 1rem;
+  padding: 1.25rem;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+}

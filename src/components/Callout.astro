@@ -1,0 +1,24 @@
+---
+interface Props {
+  accent?: string;
+  title?: string;
+  class?: string;
+}
+
+const { accent = "#4c3ae3", title, class: className = "" } = Astro.props;
+---
+
+<div
+  class:list={["not-prose my-8 rounded-2xl border border-line p-6", className]}
+  style={{
+    borderTop: `3px solid ${accent}`,
+    background: `color-mix(in srgb, ${accent} 6%, white)`,
+  }}
+>
+  {title && (
+    <p class="font-display text-base font-semibold text-ink">{title}</p>
+  )}
+  <div class:list={["text-sm leading-relaxed text-ink-soft [&>*+*]:mt-3", { "mt-2": title }]}>
+    <slot />
+  </div>
+</div>

@@ -1,0 +1,110 @@
+---
+import serverIcon from "lucide-static/icons/server.svg?raw";
+import boxIcon from "lucide-static/icons/box.svg?raw";
+import workflowIcon from "lucide-static/icons/workflow.svg?raw";
+import shieldIcon from "lucide-static/icons/shield.svg?raw";
+import barChartIcon from "lucide-static/icons/bar-chart-3.svg?raw";
+import databaseIcon from "lucide-static/icons/database.svg?raw";
+
+const groups = [
+  {
+    id: "infrastructure",
+    title: "Infrastructure",
+    icon: serverIcon,
+    items: ["Terraform", "Bicep", "Azure Resource Manager"],
+  },
+  {
+    id: "containers",
+    title: "Containers",
+    icon: boxIcon,
+    items: ["Docker", "Kubernetes", "AKS", "Helm"],
+  },
+  {
+    id: "gitops",
+    title: "GitOps & CI/CD",
+    icon: workflowIcon,
+    items: ["GitHub Actions", "Azure DevOps", "ArgoCD"],
+  },
+  {
+    id: "security",
+    title: "Security",
+    icon: shieldIcon,
+    items: ["Azure Key Vault", "Trivy", "SonarQube", "IAM"],
+  },
+  {
+    id: "observability",
+    title: "Observability",
+    icon: barChartIcon,
+    items: ["Prometheus", "Grafana", "Azure Monitor"],
+  },
+  {
+    id: "mlops",
+    title: "MLOps & Data",
+    icon: databaseIcon,
+    items: ["Python", "FastAPI", "SQL", "Azure ML"],
+  },
+];
+---
+
+<section id="skills" class="border-t border-white/10 bg-ink py-16 text-paper">
+  <div class="mx-auto max-w-6xl px-6 lg:px-10">
+    <div class="reveal">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">Toolbox</p>
+      <h2 class="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-paper sm:text-5xl">
+        Skills
+      </h2>
+    </div>
+
+    <div class="reveal mt-10 flex flex-wrap gap-3" role="tablist" aria-label="Skill categories">
+      {groups.map((group, i) => (
+        <button
+          type="button"
+          role="tab"
+          data-skill-tab={group.id}
+          aria-selected={i === 0 ? "true" : "false"}
+          class="skill-tab flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors data-[active=true]:border-pink data-[active=true]:bg-pink data-[active=true]:text-white data-[active=false]:border-white/15 data-[active=false]:text-paper/60 data-[active=false]:hover:border-white/40 data-[active=false]:hover:text-paper"
+          data-active={i === 0 ? "true" : "false"}
+        >
+          {group.title}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-10">
+      {groups.map((group, i) => (
+        <div
+          data-skill-panel={group.id}
+          class:list={["skill-panel", { hidden: i !== 0 }]}
+        >
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {group.items.map((item) => (
+              <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-pink/50 hover:bg-white/10">
+                <span class="skill-icon flex h-6 w-6 flex-shrink-0 items-center justify-center text-pink" set:html={group.icon} />
+                <span class="font-display text-base font-semibold text-paper">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-skill-tab]"));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>("[data-skill-panel]"));
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.skillTab;
+      tabs.forEach((t) => {
+        const active = t === tab;
+        t.dataset.active = String(active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      panels.forEach((panel) => {
+        panel.classList.toggle("hidden", panel.dataset.skillPanel !== target);
+      });
+    });
+  });
+</script>

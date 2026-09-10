@@ -1,0 +1,75 @@
+---
+import imageIcon from "lucide-static/icons/image.svg?raw";
+
+interface Props {
+  label: string;
+  accent?: string;
+  class?: string;
+  aspect?: string;
+  variant?: "gradient" | "neutral";
+}
+
+const {
+  label,
+  accent = "#94A3B8",
+  class: className = "",
+  aspect = "aspect-[4/3]",
+  variant = "gradient",
+} = Astro.props;
+
+function darken(hex: string, amount: number) {
+  const c = hex.replace("#", "");
+  const num = parseInt(c, 16);
+  const r = Math.max(0, (num >> 16) - amount);
+  const g = Math.max(0, ((num >> 8) & 0x00ff) - amount);
+  const b = Math.max(0, (num & 0x0000ff) - amount);
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+}
+
+const accentDark = darken(accent, 40);
+const gradientId = `grad-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+{
+  variant === "neutral" ? (
+    <div
+      class={`flex flex-col items-center justify-center gap-2 rounded-2xl border border-line bg-[#F1F1EF] ${aspect} ${className}`}
+      role="img"
+      aria-label={`${label} screenshot placeholder`}
+    >
+      <span class="placeholder-icon flex h-9 w-9 items-center justify-center text-ink-soft/50" set:html={imageIcon} />
+      <span class="text-xs font-medium text-ink-soft/70">Screenshot coming soon</span>
+    </div>
+  ) : (
+    <div class={`relative overflow-hidden rounded-2xl ${aspect} ${className}`}>
+      <svg
+        viewBox="0 0 400 300"
+        preserveAspectRatio="xMidYMid slice"
+        class="h-full w-full"
+        role="img"
+        aria-label={`${label} preview placeholder`}
+      >
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color={accent} />
+            <stop offset="100%" stop-color={accentDark} />
+          </linearGradient>
+        </defs>
+        <rect width="400" height="300" fill={`url(#${gradientId})`} />
+        <circle cx="70" cy="230" r="90" fill="white" opacity="0.08" />
+        <circle cx="360" cy="40" r="70" fill="white" opacity="0.1" />
+        <text
+          x="24"
+          y="270"
+          fill="white"
+          font-family="Space Grotesk, sans-serif"
+          font-size="20"
+          font-weight="600"
+          opacity="0.95"
+        >
+          {label}
+        </text>
+      </svg>
+    </div>
+  )
+}

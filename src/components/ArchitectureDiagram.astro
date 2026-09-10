@@ -1,0 +1,76 @@
+---
+interface Props {
+  nodes: string[];
+  accent: string;
+  class?: string;
+}
+
+const { nodes, accent, class: className = "" } = Astro.props;
+
+const boxWidth = 150;
+const boxHeight = 64;
+const gap = 60;
+const totalWidth = nodes.length * boxWidth + (nodes.length - 1) * gap + 40;
+const viewHeight = 200;
+const centerY = viewHeight / 2;
+---
+
+<div
+  class:list={["relative overflow-hidden rounded-2xl border border-line bg-white", className]}
+  role="img"
+  aria-label="Placeholder architecture diagram"
+>
+  <svg viewBox={`0 0 ${totalWidth} ${viewHeight}`} class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+    {nodes.map((node, i) => {
+      const x = 20 + i * (boxWidth + gap);
+      const y = centerY - boxHeight / 2;
+      return (
+        <g>
+          {i < nodes.length - 1 && (
+            <g>
+              <line
+                x1={x + boxWidth}
+                y1={centerY}
+                x2={x + boxWidth + gap - 10}
+                y2={centerY}
+                stroke={accent}
+                stroke-width="2"
+                stroke-dasharray="6 5"
+              />
+              <path
+                d={`M${x + boxWidth + gap - 14} ${centerY - 5} L${x + boxWidth + gap - 4} ${centerY} L${x + boxWidth + gap - 14} ${centerY + 5}`}
+                fill="none"
+                stroke={accent}
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+          )}
+          <rect
+            x={x}
+            y={y}
+            width={boxWidth}
+            height={boxHeight}
+            rx="12"
+            fill="white"
+            stroke={accent}
+            stroke-width="1.5"
+          />
+          <text
+            x={x + boxWidth / 2}
+            y={centerY}
+            text-anchor="middle"
+            dominant-baseline="middle"
+            font-family="Space Grotesk, sans-serif"
+            font-size="13"
+            font-weight="600"
+            fill="#16161a"
+          >
+            {node}
+          </text>
+        </g>
+      );
+    })}
+  </svg>
+</div>

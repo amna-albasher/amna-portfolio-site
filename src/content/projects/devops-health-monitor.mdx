@@ -1,0 +1,34 @@
+---
+title: "DevOps Health Monitor"
+category: "Real-Time Pipeline Dashboard"
+summary: "A REST API and live dashboard tracking build statuses, deployment metrics, and infrastructure uptime across environments, deployed to Vercel with a public demo."
+description: "A REST API and live dashboard tracking build statuses, deployment metrics, and infrastructure uptime across environments, deployed to Vercel with a public demo."
+tech: ["Node.js", "REST API", "Azure", "Monitoring", "Vercel"]
+accent: "#22C55E"
+order: 2
+filters: ["DevOps"]
+github: "https://github.com/amna-albasher/devops-health-api"
+liveDemo: "https://devops-health-api-three.vercel.app"
+problem: [
+  "Build statuses, deployment metrics, and infrastructure uptime were scattered across different tools and dashboards, which meant getting a real-time picture of pipeline health required checking multiple places, or worse, only discovering a problem after someone downstream noticed a failed deployment. For a small team without a dedicated platform engineer watching dashboards all day, this scattered visibility is a real risk: a failing pipeline or a degraded environment can sit unnoticed for longer than it should."
+]
+approach: [
+  "Built a REST API to aggregate build and deployment data from underlying sources, paired with a live dashboard that surfaces pipeline status and infrastructure uptime across environments in one place."
+]
+keyDecisions: [
+  "Node.js backend keeps the API layer lightweight and fast to iterate on.",
+  "Deployed to Vercel specifically so the dashboard could be shared as a public, always-available demo rather than something that only runs locally.",
+  "Designed to pull from Azure directly rather than requiring manual status updates."
+]
+architecture: "Environment build/deploy events flow into a Node.js REST API, which powers a live dashboard deployed on Vercel."
+results: [
+  "A single source of truth for pipeline and infrastructure health, viewable at a glance.",
+  "Removed the need to manually cross-check multiple tools to answer \"is everything okay right now?\"",
+  "Public demo makes the tool's value demonstrable without needing access to the underlying infrastructure."
+]
+draft: false
+terminalCommand: "deploy devops-health-monitor"
+terminalLines: ["API endpoints live", "dashboard deployed", "metrics streaming"]
+---
+
+DevOps Health Monitor is a REST API and live dashboard tracking build statuses, deployment metrics, and infrastructure uptime across environments.

@@ -1,0 +1,31 @@
+---
+title: "AI Trend Predictor"
+category: "Multi-Agent Tech Forecasting"
+summary: "A multi-agent system using the Claude API alongside Google Trends and job market data to predict emerging technology trends and in-demand skills across cloud and DevOps."
+description: "A multi-agent system using the Claude API alongside Google Trends and job market data to predict emerging technology trends and in-demand skills across cloud and DevOps."
+tech: ["Claude API", "Multi-Agent", "Python", "Google Trends"]
+accent: "#0EA5E9"
+order: 8
+filters: ["AI"]
+github: "https://github.com/amna-albasher/AI-Trend-Predictor"
+problem: [
+  "Keeping track of which cloud and DevOps skills are actually gaining demand requires manually cross-referencing job postings, search trends, and industry chatter, a slow process that's also inherently subjective, since it's easy to overweight whatever trend you personally noticed most recently."
+]
+approach: [
+  "Built a multi-agent system using the Claude API alongside Google Trends and job market data, with each agent responsible for pulling and interpreting a different data source, then synthesizing those signals into predictions about emerging technology trends and in-demand skills."
+]
+keyDecisions: [
+  "A multi-agent structure, rather than one model doing everything, was chosen so each agent could specialize in interpreting one data source correctly, rather than one prompt trying to reason over multiple unrelated data types at once.",
+  "Google Trends and job market data were combined specifically because search interest and hiring demand don't always move together. Combining both gives a more grounded signal than either alone."
+]
+architecture: "Google Trends and job market data feeds run through a multi-agent pipeline powered by the Claude API, producing an emerging trend and skill forecast."
+results: [
+  "A repeatable, automated way to surface trending skills and technologies rather than relying on manual research.",
+  "Combines multiple independent signals, search interest and hiring data, rather than a single, potentially biased source."
+]
+draft: false
+terminalCommand: "run ai-trend-predictor"
+terminalLines: ["trend data collected", "forecast generated"]
+---
+
+AI Trend Predictor is a multi-agent system using the Claude API alongside Google Trends and job market data to predict emerging technology trends and in-demand skills.

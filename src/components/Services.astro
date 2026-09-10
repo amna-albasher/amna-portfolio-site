@@ -1,0 +1,67 @@
+---
+const services = [
+  {
+    number: "01",
+    title: "Cloud Infrastructure & IaC",
+    description:
+      "Provisioning Azure infrastructure with Terraform and Bicep, so every environment is version-controlled, reviewable, and repeatable.",
+  },
+  {
+    number: "02",
+    title: "Kubernetes Platform Engineering",
+    description:
+      "Building and operating AKS platforms with GitOps delivery, so deployments are consistent and rollbacks are a git revert away.",
+  },
+  {
+    number: "03",
+    title: "CI/CD & DevSecOps Pipelines",
+    description:
+      "Designing pipelines that scan, test, and gate every change automatically, so security review happens before merge, not after an incident.",
+  },
+  {
+    number: "04",
+    title: "MLOps & Model Deployment",
+    description:
+      "Taking models from notebook to production endpoint with repeatable pipelines, versioning, and monitoring built in from the start.",
+  },
+  {
+    number: "05",
+    title: "Observability & Cost/FinOps Tooling",
+    description:
+      "Wiring up Prometheus, Grafana, and cost-visibility tooling so teams can see system health and spend without digging through five dashboards.",
+  },
+  {
+    number: "06",
+    title: "AI-Assisted Automation",
+    description:
+      "Building automation that uses AI to triage alerts, recommend architecture, and surface insights, so routine analysis doesn't need a human in the loop every time.",
+  },
+];
+---
+
+<section id="services" class="border-t border-line/70 bg-white py-16">
+  <div class="mx-auto max-w-6xl px-6 lg:px-10">
+    <div class="reveal">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">What I Do</p>
+      <h2 class="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-ink sm:text-5xl">
+        Services
+      </h2>
+    </div>
+
+    <div class="mt-10 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+      {services.map((service) => (
+        <div class="reveal group relative border-t border-line/70 pt-6 transition-transform duration-300 hover:-translate-y-1">
+          <span class="ghost-number font-display text-5xl font-bold">{service.number}</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-ink">{service.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-soft">{service.description}</p>
+          <a
+            href="/#portfolio"
+            class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-pink transition-transform group-hover:translate-x-1"
+          >
+            Check Details <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

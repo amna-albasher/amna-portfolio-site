@@ -1,0 +1,33 @@
+---
+title: "AI Incident Response System"
+category: "Automated Alert Triage"
+summary: "An Azure OpenAI–powered system that classifies infrastructure alerts, suggests remediation steps, and automatically escalates critical incidents to reduce mean time to response."
+description: "An Azure OpenAI–powered system that classifies infrastructure alerts, suggests remediation steps, and automatically escalates critical incidents to reduce mean time to response."
+tech: ["Azure OpenAI", "Python", "AI Automation", "Azure Monitor"]
+accent: "#14B8A6"
+order: 4
+filters: ["AI", "DevOps"]
+github: "https://github.com/amna-albasher/ai-incident-response"
+problem: [
+  "Infrastructure alerts often arrive faster than they can be manually triaged, and not every alert deserves the same urgency. Without a consistent triage process, engineers either treat everything as equally urgent, leading to alert fatigue, or start ignoring alerts altogether, which is worse. The real challenge isn't detecting problems, since most monitoring tools already do that. It's deciding, quickly and consistently, what to do about each one."
+]
+approach: [
+  "Built an Azure OpenAI–powered classification layer that reads incoming alerts, classifies their severity and likely cause, suggests remediation steps based on the alert type, and automatically escalates anything critical rather than queuing it at the same priority as routine noise."
+]
+keyDecisions: [
+  "Azure OpenAI was chosen specifically for its native integration with Azure Monitor's alerting data, avoiding a separate data pipeline just to get alerts into the model.",
+  "Remediation suggestions are generated per alert type rather than generic, so the output is actually actionable rather than boilerplate advice.",
+  "Escalation logic is rule-based on top of the model's classification, so critical incidents don't depend solely on the model's judgment."
+]
+architecture: "Azure Monitor alerts feed a Python triage service, which calls Azure OpenAI for classification and remediation suggestions, escalating automatically for critical incidents."
+results: [
+  "Alerts are triaged automatically before reaching an engineer, cutting the manual sorting step out of the loop.",
+  "Critical incidents are surfaced and escalated faster than in a manual, first-come-first-served alert queue.",
+  "Reduces alert fatigue by separating genuinely urgent issues from routine noise."
+]
+draft: false
+terminalCommand: "deploy incident-response"
+terminalLines: ["alert pipeline active", "Azure OpenAI connected"]
+---
+
+The AI Incident Response System is an Azure OpenAI–powered system that classifies infrastructure alerts, suggests remediation steps, and automatically escalates critical incidents.

@@ -1,0 +1,27 @@
+---
+interface Props {
+  accent?: string;
+  class?: string;
+}
+
+const { accent = "#4c3ae3", class: className = "" } = Astro.props;
+---
+
+<blockquote
+  class:list={["not-prose relative my-8 rounded-2xl border border-line p-8", className]}
+  style={{
+    borderTop: `3px solid ${accent}`,
+    background: `color-mix(in srgb, ${accent} 6%, white)`,
+  }}
+>
+  <span
+    class="font-display text-5xl font-bold leading-none"
+    style={{ color: accent }}
+    aria-hidden="true"
+  >
+    &ldquo;
+  </span>
+  <p class="mt-2 font-display text-xl font-medium leading-snug text-ink sm:text-2xl">
+    <slot />
+  </p>
+</blockquote>

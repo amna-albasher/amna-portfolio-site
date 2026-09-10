@@ -1,0 +1,35 @@
+---
+title: "CloudBite"
+category: "Enterprise AKS Platform"
+summary: "A multi-repo, cloud-native food ordering platform built for production. Four independently managed services cover the application layer, CI/CD pipelines, Terraform infrastructure, and Helm chart deployments, with Trivy security scanning, SonarQube quality gates, and Prometheus/Grafana monitoring wired in from day one."
+description: "A multi-repo, cloud-native food ordering platform built for production. Four independently managed services cover the application layer, CI/CD pipelines, Terraform infrastructure, and Helm chart deployments, with Trivy security scanning, SonarQube quality gates, and Prometheus/Grafana monitoring wired in from day one."
+tech: ["Kubernetes", "AKS", "Terraform", "ArgoCD", "Helm"]
+accent: "#0EA5E9"
+order: 1
+filters: ["Cloud", "DevOps"]
+github: "https://github.com/amna-albasher/amna-hashim-tech-cloudbite-app"
+problem: [
+  "Standing up a production-grade food ordering platform on Kubernetes meant coordinating four very different concerns at once: application code, infrastructure provisioning, delivery pipelines, and chart-based deployments, without letting any one of them block the others. Most small teams handle this by bundling everything into a single repo and a single pipeline, which works until the infrastructure changes need to move faster than the application code, or vice versa, and the coupling starts causing unnecessary deployment freezes. Security scanning is also frequently the first thing cut under time pressure, becoming a manual, easy-to-skip step rather than a hard gate.",
+  "Beyond the repo structure, there was a real question of how to keep the cluster observable without adding operational overhead. A Kubernetes platform that requires someone to manually check pod health or dig through logs to catch problems doesn't scale past a handful of services."
+]
+approach: [
+  "The platform is split into four independently managed repositories: application layer, CI/CD pipelines, Terraform infrastructure, and Helm chart deployments, so each concern can move and be reviewed on its own timeline. GitOps delivery through ArgoCD means the cluster state is always a reflection of what's committed to Git, not a manual `kubectl apply` on someone's laptop."
+]
+keyDecisions: [
+  "Trivy scans images for vulnerabilities before they ship, and SonarQube gates code quality. Both run automatically in CI, not as a manual pre-deploy checklist.",
+  "Prometheus and Grafana were wired in from the start rather than bolted on later, so observability isn't an afterthought once something breaks.",
+  "Terraform manages the underlying AKS infrastructure separately from the Helm charts that deploy onto it, so infra changes and application deployments don't have to ship together."
+]
+architecture: "Kubernetes cluster provisioned via Terraform, application deployed through Helm charts, ArgoCD managing GitOps delivery, Trivy and SonarQube gating the pipeline, Prometheus and Grafana monitoring the running cluster."
+results: [
+  "Delivered a production-ready platform with clean separation between application, delivery, infrastructure, and deployment concerns.",
+  "Security scanning and quality gates run automatically on every change rather than as a manual step someone has to remember.",
+  "GitOps-based delivery through ArgoCD means every deployment is tracked and reversible via Git history.",
+  "Monitoring is built into the platform from day one, not added reactively after an incident."
+]
+draft: false
+terminalCommand: "deploy cloudbite"
+terminalLines: ["AKS cluster ready", "GitOps synced", "monitoring active"]
+---
+
+CloudBite is a multi-repo, cloud-native food ordering platform built for production, with four independently managed services covering the application layer, CI/CD pipelines, Terraform infrastructure, and Helm chart deployments.

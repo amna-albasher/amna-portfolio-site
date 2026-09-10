@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import TerminalMock from "./TerminalMock.astro";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+
+const filterTabs = ["All", "DevOps", "AI", "Cloud"] as const;
+---
+
+<section id="portfolio" class="border-t border-line/70 bg-paper py-16">
+  <div class="mx-auto max-w-6xl px-6 lg:px-10">
+    <div class="reveal">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">My Work</p>
+      <h2 class="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-ink sm:text-5xl">
+        Portfolio
+      </h2>
+    </div>
+
+    <div class="reveal mt-8 flex flex-wrap gap-3" role="tablist" aria-label="Project filters">
+      {filterTabs.map((tab, i) => (
+        <button
+          type="button"
+          data-portfolio-filter={tab}
+          aria-pressed={i === 0 ? "true" : "false"}
+          class="portfolio-filter-tab rounded-full border px-4 py-2 text-sm font-semibold transition-colors data-[active=true]:border-pink data-[active=true]:bg-pink data-[active=true]:text-white data-[active=false]:border-line data-[active=false]:text-ink-soft data-[active=false]:hover:border-pink/50 data-[active=false]:hover:text-pink"
+          data-active={i === 0 ? "true" : "false"}
+        >
+          {tab}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => (
+        <div
+          data-portfolio-card
+          data-filters={project.data.filters.join(",")}
+          class="reveal group overflow-hidden rounded-2xl border border-line bg-white transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl"
+        >
+          <a href={`/portfolio/${project.id}`} class="relative block">
+            <TerminalMock
+              command={project.data.terminalCommand}
+              lines={project.data.terminalLines}
+              class="transition-transform duration-500 group-hover:scale-105"
+            />
+          </a>
+          <div class="p-6">
+            <span class="text-xs font-semibold uppercase tracking-wide text-pink">
+              {project.data.category}
+            </span>
+            <a href={`/portfolio/${project.id}`}>
+              <h3 class="mt-2 font-display text-xl font-semibold text-ink">{project.data.title}</h3>
+            </a>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{project.data.summary}</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {project.data.tech.slice(0, 4).map((t) => (
+                <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-soft">
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <div class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+              <a
+                href={`/portfolio/${project.id}`}
+                class="inline-flex items-center gap-1 text-sm font-semibold text-pink transition-transform group-hover:translate-x-1"
+              >
+                View Project <span aria-hidden="true">&rarr;</span>
+              </a>
+              <a
+                href={project.data.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-medium text-ink-soft transition-colors hover:text-pink"
+              >
+                GitHub &#8599;
+              </a>
+              {project.data.liveDemo && (
+                <a
+                  href={project.data.liveDemo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-medium text-ink-soft transition-colors hover:text-pink"
+                >
+                  Live Demo &#8599;
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-portfolio-filter]"));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-portfolio-card]"));
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const filter = tab.dataset.portfolioFilter!;
+      tabs.forEach((t) => {
+        const active = t === tab;
+        t.dataset.active = String(active);
+        t.setAttribute("aria-pressed", String(active));
+      });
+      cards.forEach((card) => {
+        const filters = (card.dataset.filters || "").split(",");
+        const show = filter === "All" || filters.includes(filter);
+        card.classList.toggle("hidden", !show);
+      });
+    });
+  });
+</script>

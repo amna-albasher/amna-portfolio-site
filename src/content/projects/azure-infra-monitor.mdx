@@ -1,0 +1,31 @@
+---
+title: "Azure Infrastructure Monitor"
+category: "Real-Time Cloud Health Dashboard"
+summary: "A Streamlit dashboard pulling live Azure Monitor metrics to surface resource health, anomaly detection alerts, and cost tracking, built with Python and the Azure SDK."
+description: "A Streamlit dashboard pulling live Azure Monitor metrics to surface resource health, anomaly detection alerts, and cost tracking, built with Python and the Azure SDK."
+tech: ["Streamlit", "Python", "Azure Monitor", "Azure SDK"]
+accent: "#6366F1"
+order: 7
+filters: ["Cloud"]
+github: "https://github.com/amna-albasher/azure-infrastructure-monitor"
+problem: [
+  "Azure Monitor's native views are comprehensive but not always easy to scan at a glance. Surfacing anomalies or cost trends across multiple resources often means clicking through several different views rather than seeing the full picture in one place."
+]
+approach: [
+  "Built a Streamlit dashboard using the Azure SDK to pull live Azure Monitor metrics directly, consolidating resource health, anomaly detection alerts, and cost tracking into a single view."
+]
+keyDecisions: [
+  "Streamlit was chosen for how quickly it turns a Python data pipeline into an actual interactive dashboard, without needing a separate frontend build.",
+  "Built directly on the Azure SDK rather than a third-party monitoring wrapper, keeping the data pipeline close to the source."
+]
+architecture: "Azure Monitor metrics are ingested through the Azure SDK and surfaced in a Streamlit dashboard showing health, anomalies, and cost."
+results: [
+  "A single dashboard for resource health and cost visibility, reducing the need to cross-reference multiple Azure Monitor views manually.",
+  "Anomaly detection is surfaced proactively rather than requiring someone to notice a spike manually."
+]
+draft: false
+terminalCommand: "run azure-infra-monitor"
+terminalLines: ["metrics synced", "dashboard live"]
+---
+
+Azure Infrastructure Monitor is a Streamlit dashboard pulling live Azure Monitor metrics to surface resource health, anomaly detection alerts, and cost tracking.

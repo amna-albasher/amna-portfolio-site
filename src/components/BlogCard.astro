@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BlogCover from "./BlogCover.astro";
+import layersIcon from "lucide-static/icons/layers.svg?raw";
+import forkIcon from "lucide-static/icons/git-fork.svg?raw";
+import routeIcon from "lucide-static/icons/route.svg?raw";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  class?: string;
+}
+
+const { post, class: className = "" } = Astro.props;
+
+const coverIcons: Record<string, string> = {
+  layers: layersIcon,
+  fork: forkIcon,
+  route: routeIcon,
+};
+---
+
+<div
+  class:list={[
+    "group overflow-hidden rounded-2xl border border-line bg-white/80 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl",
+    className,
+  ]}
+>
+  <a href={`/blog/${post.id}`} class="block">
+    <BlogCover
+      icon={coverIcons[post.data.coverIcon]}
+      accent={post.data.accent}
+      label={post.data.title}
+      aspect="aspect-[16/10]"
+      class="transition-transform duration-500 group-hover:scale-105"
+    />
+  </a>
+  <div class="p-6">
+    {post.data.comingSoon && (
+      <span class="inline-block rounded-full bg-pink-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-pink">
+        Coming Soon
+      </span>
+    )}
+    <a href={`/blog/${post.id}`}>
+      <h3 class="mt-3 font-display text-lg font-semibold leading-snug text-ink">
+        {post.data.title}
+      </h3>
+    </a>
+    <p class="mt-2 text-sm leading-relaxed text-ink-soft">{post.data.description}</p>
+    <a
+      href={`/blog/${post.id}`}
+      class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-pink transition-transform group-hover:translate-x-1"
+    >
+      Read Article <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</div>
