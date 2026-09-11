@@ -1,29 +1,31 @@
 ---
 title: "Terraform Enterprise Infrastructure"
 category: "Multi-Environment Azure IaC"
-summary: "Multi-environment Azure infrastructure provisioned entirely with Terraform, with separate dev, staging, and production workspaces, remote state, load balancing, VMs, and Azure Monitor integration."
+summary: "A hands-on project provisioning multi-environment Azure infrastructure with Terraform: separate dev, staging, and production workspaces with remote state."
 description: "Multi-environment Azure infrastructure provisioned entirely with Terraform, with separate dev, staging, and production workspaces, remote state, load balancing, VMs, and Azure Monitor integration."
 tech: ["Terraform", "Azure", "IaC", "Remote State", "Load Balancing"]
 accent: "#F59E0B"
 order: 3
 filters: ["Cloud"]
 github: "https://github.com/amna-albasher/azure-terraform-enterprise"
+role: "Built and managed the infrastructure end to end, using Terraform to provision and manage separate dev, staging, and production environments."
 problem: [
-  "Managing Azure infrastructure by hand across dev, staging, and production environments creates two compounding risks: environment drift, where staging quietly stops matching production, and a lack of auditability, with no clear record of who changed what, or why. Manual changes made directly in the Azure portal are also difficult to roll back cleanly if something goes wrong. As the number of resources grows, VMs, load balancers, monitoring integrations, the coordination cost of keeping environments consistent by hand grows with it."
+  "Keeping dev, staging, and production consistent is a common infrastructure problem: without a shared approach, environments quietly drift apart or teams end up copying the same code between them."
 ]
 approach: [
-  "Provisioned all three environments entirely with Terraform, using separate workspaces per environment so each can be planned and applied independently, with remote state enabling safe collaboration across a team rather than a single person holding local state files."
+  "I built one Terraform codebase that provisions three environments with different resource sizes. Production uses a load balancer with two web servers for high availability, staging uses one smaller web server, and dev uses a minimal setup to keep costs low. All three environments use the same Terraform code, with separate workspaces so changes are applied to the correct environment. I used Terraform Cloud for remote state instead of keeping the state file locally, and added Azure Monitor to keep track of the provisioned resources."
 ]
 keyDecisions: [
-  "Remote state was a deliberate choice to make the setup team-safe rather than reliant on one person's machine.",
-  "Load balancing and VM provisioning are defined as code, so scaling or reconfiguring infrastructure is a reviewable pull request, not a manual console change.",
-  "Azure Monitor integration was included from the start so infrastructure health is visible without needing a separate observability project layered on top later."
+  "Used Terraform Cloud for remote state instead of keeping the state file on my local machine. This means the state is available when working from different machines and is not lost if the local machine has an issue.",
+  "Made the environments different sizes on purpose. Production has a load balancer and two web servers, while staging and dev are smaller because they do not need the same level of resources.",
+  "Kept all three environments in the same Terraform codebase so I could make changes in dev and staging before applying them to production."
 ]
 architecture: "Terraform workspaces per environment feed a remote state backend, provisioning VMs and a load balancer, with Azure Monitor integration on top."
 results: [
-  "Infrastructure is version-controlled and reproducible across all three environments.",
-  "Changes go through review before reaching production, rather than being applied directly.",
-  "Environment drift between dev, staging, and production is eliminated since all three are defined from the same source."
+  "Three working environments, dev, staging, and production, provisioned from one Terraform codebase.",
+  "Remote state managed through Terraform Cloud instead of a local state file.",
+  "Production configured with a load balancer and two web servers, while staging and dev use smaller setups.",
+  "Azure Monitor integrated to provide visibility into the provisioned resources."
 ]
 draft: false
 terminalCommand: "apply terraform-enterprise-infra"

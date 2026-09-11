@@ -1,31 +1,35 @@
 ---
 title: "Azure Infrastructure Monitor"
-category: "Real-Time Cloud Health Dashboard"
-summary: "A Streamlit dashboard pulling live Azure Monitor metrics to surface resource health, anomaly detection alerts, and cost tracking, built with Python and the Azure SDK."
-description: "A Streamlit dashboard pulling live Azure Monitor metrics to surface resource health, anomaly detection alerts, and cost tracking, built with Python and the Azure SDK."
-tech: ["Streamlit", "Python", "Azure Monitor", "Azure SDK"]
+category: "Simulated Cloud Monitoring Dashboard"
+summary: "A Streamlit dashboard simulating Azure infrastructure monitoring with realistic mock data, surfacing VM performance, resource usage, and alerts in one view."
+description: "A Streamlit dashboard simulating Azure infrastructure monitoring with realistic mock data, surfacing VM performance, storage usage, App Service health, and cost tracking without connecting to a live Azure subscription."
+tech: ["Streamlit", "Python", "Mock Data", "Dashboard"]
 accent: "#6366F1"
 order: 7
 filters: ["Cloud"]
 github: "https://github.com/amna-albasher/azure-infrastructure-monitor"
+role: "Built and delivered the monitoring dashboard end to end, including the Streamlit UI, mock data layer, and monitoring views."
 problem: [
-  "Azure Monitor's native views are comprehensive but not always easy to scan at a glance. Surfacing anomalies or cost trends across multiple resources often means clicking through several different views rather than seeing the full picture in one place."
+  "I wanted to build a dashboard that could bring Azure infrastructure health, resource usage, cost tracking, and anomaly detection into one place. The idea was to have a single view for things like VMs, storage accounts, App Services, and subscription costs, similar to the monitoring dashboards used by cloud teams."
 ]
 approach: [
-  "Built a Streamlit dashboard using the Azure SDK to pull live Azure Monitor metrics directly, consolidating resource health, anomaly detection alerts, and cost tracking into a single view."
+  "I built a Streamlit dashboard that displays VM performance, storage usage, App Service health, and subscription level cost tracking with budget utilization. Instead of connecting the demo directly to a live Azure subscription, I built a mock data generator that produces realistic Azure metrics. This avoids exposing Azure credentials and makes the demo safer and easier to control when presenting it. The mock data includes realistic resource names, regions, cost ranges, and performance values so the dashboard behaves like a real monitoring dashboard rather than displaying obviously fake numbers. I also added auto refresh so the dashboard updates automatically while it is open."
 ]
 keyDecisions: [
-  "Streamlit was chosen for how quickly it turns a Python data pipeline into an actual interactive dashboard, without needing a separate frontend build.",
-  "Built directly on the Azure SDK rather than a third-party monitoring wrapper, keeping the data pipeline close to the source."
+  "Used simulated data instead of connecting directly to a live Azure subscription, so the demo does not require or expose Azure credentials.",
+  "Built the mock data to look like realistic Azure resource and monitoring data, including resource names, regions, costs, and performance values.",
+  "Used Streamlit to build the dashboard without having to create a separate frontend application.",
+  "Added automatic refresh so the dashboard can show changing metrics while it is running."
 ]
-architecture: "Azure Monitor metrics are ingested through the Azure SDK and surfaced in a Streamlit dashboard showing health, anomalies, and cost."
+architecture: "A mock data generator produces realistic Azure-style metrics, which are rendered in a Streamlit dashboard showing VM performance, storage usage, App Service health, and cost tracking."
 results: [
-  "A single dashboard for resource health and cost visibility, reducing the need to cross-reference multiple Azure Monitor views manually.",
-  "Anomaly detection is surfaced proactively rather than requiring someone to notice a spike manually."
+  "A working dashboard showing VM performance, storage usage, App Service health, subscription costs, budget utilization, and anomaly information.",
+  "A credential free demo that can be presented safely without connecting to a real Azure subscription.",
+  "Auto refreshing views that make the simulated monitoring data feel closer to a live cloud monitoring dashboard."
 ]
 draft: false
 terminalCommand: "run azure-infra-monitor"
 terminalLines: ["metrics synced", "dashboard live"]
 ---
 
-Azure Infrastructure Monitor is a Streamlit dashboard pulling live Azure Monitor metrics to surface resource health, anomaly detection alerts, and cost tracking.
+Azure Infrastructure Monitor is a Streamlit dashboard simulating Azure infrastructure monitoring with realistic mock data, surfacing resource health, cost tracking, and anomaly information without connecting to a live Azure subscription.

@@ -1,7 +1,7 @@
 ---
 title: "DevOps Health Monitor"
 category: "Real-Time Pipeline Dashboard"
-summary: "A REST API and live dashboard tracking build statuses, deployment metrics, and infrastructure uptime across environments, deployed to Vercel with a public demo."
+summary: "A REST API and live dashboard tracking build statuses, deployment metrics, and infrastructure uptime across environments. Deployed to Vercel with a public demo."
 description: "A REST API and live dashboard tracking build statuses, deployment metrics, and infrastructure uptime across environments, deployed to Vercel with a public demo."
 tech: ["Node.js", "REST API", "Azure", "Monitoring", "Vercel"]
 accent: "#22C55E"
@@ -9,22 +9,25 @@ order: 2
 filters: ["DevOps"]
 github: "https://github.com/amna-albasher/devops-health-api"
 liveDemo: "https://devops-health-api-three.vercel.app"
+role: "Built and delivered the project end to end, including the backend, infrastructure, CI/CD, and monitoring."
 problem: [
-  "Build statuses, deployment metrics, and infrastructure uptime were scattered across different tools and dashboards, which meant getting a real-time picture of pipeline health required checking multiple places, or worse, only discovering a problem after someone downstream noticed a failed deployment. For a small team without a dedicated platform engineer watching dashboards all day, this scattered visibility is a real risk: a failing pipeline or a degraded environment can sit unnoticed for longer than it should."
+  "I wanted a way to know, in real time, whether the tools I depend on daily, GitHub, Docker Hub, Azure, Cloudflare, Google Cloud, and AWS, were actually up and responding quickly, rather than finding out only when something broke. The first version was a simple Flask app that returned a static status page without actually checking the services. I rebuilt it through several versions until it provided real, live monitoring instead of displaying a placeholder dashboard."
 ]
 approach: [
-  "Built a REST API to aggregate build and deployment data from underlying sources, paired with a live dashboard that surfaces pipeline status and infrastructure uptime across environments in one place."
+  "Built a FastAPI backend that sends live HTTP requests to each of the six services every 10 seconds and measures response times against defined thresholds. No simulated data is used. If a service is slow or unreachable, the dashboard flags it based on the actual response. The app is containerized with Docker and runs across three environments, local, dev, and production. Each environment has its own badge on the dashboard so it is clear which environment is being viewed. Infrastructure is defined in Terraform, provisioning an Azure Container Registry and App Service for the dev and production environments. Deployments are handled through two separate pipelines, one in GitHub Actions and one in Azure DevOps, each using Test, Build, and Deploy stages."
 ]
 keyDecisions: [
-  "Node.js backend keeps the API layer lightweight and fast to iterate on.",
-  "Deployed to Vercel specifically so the dashboard could be shared as a public, always-available demo rather than something that only runs locally.",
-  "Designed to pull from Azure directly rather than requiring manual status updates."
+  "Used real HTTP requests against live services rather than mocked data, so the dashboard reflects actual conditions rather than a simulation.",
+  "Built both GitHub Actions and Azure DevOps pipelines with Test, Build, and Deploy stages to practice CI/CD across two different platforms.",
+  "Added four automated tests with pytest, which run in CI before deployment.",
+  "Containerized the app with Docker from an early stage so the same image can be used across local, dev, and production environments."
 ]
 architecture: "Environment build/deploy events flow into a Node.js REST API, which powers a live dashboard deployed on Vercel."
 results: [
-  "A single source of truth for pipeline and infrastructure health, viewable at a glance.",
-  "Removed the need to manually cross-check multiple tools to answer \"is everything okay right now?\"",
-  "Public demo makes the tool's value demonstrable without needing access to the underlying infrastructure."
+  "A live dashboard tracking real uptime and response times for six external services, refreshed every 10 seconds.",
+  "Two working CI/CD pipelines, one in GitHub Actions and one in Azure DevOps, both running automated tests before deployment.",
+  "Three working environments, local, dev, and production, with the dev and production infrastructure provisioned through Terraform.",
+  "Deployed and publicly accessible on both Azure App Service and Vercel."
 ]
 draft: false
 terminalCommand: "deploy devops-health-monitor"

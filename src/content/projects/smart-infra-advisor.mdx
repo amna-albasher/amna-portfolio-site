@@ -1,7 +1,7 @@
 ---
 title: "Smart Infrastructure Advisor"
 category: "AI Architecture Recommendations"
-summary: "A FastAPI application powered by the Claude API that analyzes cloud workload requirements and recommends optimal Azure architecture with real-time pricing estimates. Live on Vercel."
+summary: "A FastAPI application powered by the Claude API that analyzes cloud workload requirements and recommends Azure architecture with pricing estimates."
 description: "A FastAPI application powered by the Claude API that analyzes cloud workload requirements and recommends optimal Azure architecture with real-time pricing estimates. Live on Vercel."
 tech: ["FastAPI", "Claude API", "Python", "Vercel", "Azure"]
 accent: "#E0367A"
@@ -9,22 +9,25 @@ order: 6
 filters: ["AI", "Cloud"]
 github: "https://github.com/amna-albasher/smart-infrastructure-advisor"
 liveDemo: "https://smart-infrastructure-advisor.vercel.app"
+role: "Built and delivered the application end to end, including the FastAPI backend, Claude API integration, and live deployment."
 problem: [
-  "Choosing the right Azure architecture for a given workload often comes down to individual experience and guesswork. Balancing compute, storage, and networking choices against cost is a genuinely hard tradeoff to reason through quickly, especially for less common workload shapes."
+  "Choosing the right Azure architecture for a workload usually means comparing different compute, storage, and networking options while also keeping cost in mind. I wanted to build something that could help with that process instead of manually working through the options every time. I also wanted the tool to handle the questions that usually come after the initial recommendation. For example, how to add auto scaling, what a disaster recovery setup could look like, or how much a specific Azure service might cost."
 ]
 approach: [
-  "Built a FastAPI application powered by the Claude API that takes in stated workload requirements and returns a recommended Azure architecture along with real-time pricing estimates, deployed live on Vercel so it's usable as a real tool rather than a local script."
+  "I built a FastAPI backend that takes a plain language description of a project and sends the requirements to the Claude API. The API returns a recommended Azure architecture along with estimated costs. I also added follow up questions so the user can continue asking about the recommended architecture instead of getting only one answer. During testing, I used questions about App Service auto scaling, database scaling, Application Insights monitoring, disaster recovery, and Azure Redis Cache pricing. The responses were based on the original workload and architecture rather than treating each question as a separate generic request. The application is deployed on Vercel and available as a live demo."
 ]
 keyDecisions: [
-  "FastAPI was chosen for a lightweight, fast-to-iterate backend that could expose the recommendation logic as a clean API.",
-  "Real-time pricing estimates were included specifically so recommendations come with a cost tradeoff attached, not just a technical suggestion in isolation.",
-  "Deployed live rather than kept as a notebook or CLI tool, since the goal was a genuinely usable advisor, not a proof of concept."
+  "Used the Claude API to reason through Azure architecture options from a plain language description instead of building a fixed rules based recommendation system.",
+  "Made the tool interactive so users can ask follow up questions about scaling, disaster recovery, monitoring, or specific service costs.",
+  "Kept the original workload context when answering follow up questions, so the recommendations stay connected to the architecture that was initially suggested.",
+  "Deployed the application on Vercel so it could be used as a live tool rather than only running it locally."
 ]
 architecture: "Workload requirements are submitted to a FastAPI backend, analyzed by the Claude API, and returned as an architecture recommendation with a pricing estimate, served on Vercel."
 results: [
-  "Turns an architecture decision that normally requires research and back-and-forth into an immediate, data-backed recommendation.",
-  "Cost visibility is built into the recommendation itself, not a separate step.",
-  "Publicly usable via a live demo rather than requiring local setup."
+  "A live tool that takes a plain language project description and returns a recommended Azure architecture with estimated costs.",
+  "Follow up questions supported for areas such as auto scaling, disaster recovery, monitoring, and Azure service pricing.",
+  "Tested with real architecture questions to make sure the responses stayed specific to the original workload.",
+  "Publicly accessible through a live demo deployed on Vercel."
 ]
 draft: false
 terminalCommand: "run infra-advisor"

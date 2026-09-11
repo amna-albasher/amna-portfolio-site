@@ -1,28 +1,34 @@
 ---
 title: "AKS E-Commerce Platform"
-category: "Production Kubernetes Deployment"
-summary: "A production-grade e-commerce platform on Azure Kubernetes Service, with a multi-container architecture, Helm charts, and a full CI/CD pipeline through Azure DevOps."
+category: "Azure Kubernetes Deployment"
+summary: "An e-commerce platform taken from Docker Compose to a live Azure Kubernetes Service deployment, with multi-container architecture and Helm charts."
 description: "A production-grade e-commerce platform on Azure Kubernetes Service, with a multi-container architecture, Helm charts, and a full CI/CD pipeline through Azure DevOps."
 tech: ["Kubernetes", "AKS", "Docker", "Helm", "Azure DevOps"]
 accent: "#8B5CF6"
 order: 5
 filters: ["Cloud", "DevOps"]
 github: "https://github.com/amna-albasher/ecommerce-devops-project"
+role: "Owned the implementation end to end, from containerization and local Kubernetes testing through to the AKS deployment and CI/CD pipeline."
 problem: [
-  "Deploying a multi-container e-commerce application to production needs a process that's repeatable and safe to run often. Manual container management across environments doesn't scale past the first few deployments, and it's easy for configuration to quietly diverge between environments."
+  "Taking a containerized application to production on Kubernetes requires more than running it locally, it means handling deployment, availability, and a pipeline that can ship changes safely."
 ]
 approach: [
-  "Deployed the platform on Azure Kubernetes Service with a multi-container architecture managed through Helm charts, with the entire release process automated through an Azure DevOps CI/CD pipeline from build through deployment."
+  "I started by containerizing the e-commerce application with Docker Compose and making sure the multi-container setup worked locally. I then moved it to Minikube to test the Kubernetes deployment before putting it on Azure. Once the Kubernetes setup was working, I deployed the application to Azure Kubernetes Service using Helm charts. The AKS deployment runs two replicas so Kubernetes can replace a pod if one fails. For the image workflow, I used Azure Container Registry to store the Docker image. GitHub Actions handles the deployment process by building the image, pushing it to ACR, and updating the AKS deployment whenever changes are pushed."
 ]
 keyDecisions: [
-  "Helm charts package the multi-container setup so deployments are parameterized and consistent, not a series of manual `kubectl` commands per container.",
-  "Azure DevOps was chosen to keep the pipeline tightly integrated with the rest of the Azure-based infrastructure rather than introducing a separate CI tool."
+  "Started with Docker Compose and then tested the application on Minikube before moving to AKS. This gave me a way to work through container and Kubernetes issues locally first.",
+  "Used Helm charts to manage the Kubernetes deployment instead of applying each resource manually.",
+  "Ran two replicas in AKS so the application does not depend on a single pod and Kubernetes can replace a failed pod.",
+  "Used Azure Container Registry to store the application image used by the AKS deployment.",
+  "Automated the build and deployment process with GitHub Actions so changes can go from Git to the running AKS application without manually building images or updating the cluster."
 ]
 architecture: "Azure DevOps pipeline builds container images, Helm charts define the multi-container deployment, and AKS runs the production workload."
 results: [
-  "Consistent, repeatable deployments to Kubernetes with no manual container orchestration.",
-  "The full release process, build, test, and deploy, runs through a single automated pipeline.",
-  "Configuration is defined in version-controlled Helm values rather than environment-specific manual setup."
+  "A working e-commerce application deployed to Azure Kubernetes Service and publicly accessible.",
+  "Two replicas running in AKS with Kubernetes handling pod replacement if one fails.",
+  "Docker images built and stored in Azure Container Registry as part of the deployment process.",
+  "A working GitHub Actions pipeline that builds, pushes, and deploys the application automatically.",
+  "A complete progression from Docker Compose, to Minikube, to a real AKS deployment."
 ]
 draft: false
 terminalCommand: "deploy aks-ecommerce-platform"

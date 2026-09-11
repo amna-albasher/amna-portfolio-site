@@ -1,33 +1,33 @@
 ---
 title: "AI Incident Response System"
-category: "Automated Alert Triage"
-summary: "An Azure OpenAI–powered system that classifies infrastructure alerts, suggests remediation steps, and automatically escalates critical incidents to reduce mean time to response."
-description: "An Azure OpenAI–powered system that classifies infrastructure alerts, suggests remediation steps, and automatically escalates critical incidents to reduce mean time to response."
-tech: ["Azure OpenAI", "Python", "AI Automation", "Azure Monitor"]
+category: "AI-Powered Incident Diagnosis"
+summary: "A Flask app with a Python log watcher that detects errors in Docker logs in real time and sends them to the Claude API, which returns a plain-language incident report."
+description: "A Flask app with a Python log watcher that detects errors in Docker logs in real time and sends them to the Claude API, which returns a plain-language incident report explaining what likely happened and where to look first."
+tech: ["Flask", "Claude API", "Python", "Docker"]
 accent: "#14B8A6"
 order: 4
 filters: ["AI", "DevOps"]
 github: "https://github.com/amna-albasher/ai-incident-response"
+role: "Built the whole detection-to-diagnosis flow myself, the Flask app, the log watcher, and the AI piece that ties it together."
 problem: [
-  "Infrastructure alerts often arrive faster than they can be manually triaged, and not every alert deserves the same urgency. Without a consistent triage process, engineers either treat everything as equally urgent, leading to alert fatigue, or start ignoring alerts altogether, which is worse. The real challenge isn't detecting problems, since most monitoring tools already do that. It's deciding, quickly and consistently, what to do about each one."
+  "When something breaks, the hard part usually isn't noticing it, logs will tell you that much. The real delay is between an error showing up and someone actually figuring out what it means. I wanted to shrink that gap so a diagnosis starts forming the moment something goes wrong, not ten minutes later once someone opens the logs."
 ]
 approach: [
-  "Built an Azure OpenAI–powered classification layer that reads incoming alerts, classifies their severity and likely cause, suggests remediation steps based on the alert type, and automatically escalates anything critical rather than queuing it at the same priority as routine noise."
+  "I built a small Flask app with endpoints that simulate real failures, then wrote a Python script that watches the app's Docker logs as they come in. The moment it spots an error line, it grabs the surrounding log context and sends it to the Claude API, which comes back with a plain-language report on what probably happened and where to look first."
 ]
 keyDecisions: [
-  "Azure OpenAI was chosen specifically for its native integration with Azure Monitor's alerting data, avoiding a separate data pipeline just to get alerts into the model.",
-  "Remediation suggestions are generated per alert type rather than generic, so the output is actually actionable rather than boilerplate advice.",
-  "Escalation logic is rule-based on top of the model's classification, so critical incidents don't depend solely on the model's judgment."
+  "Watched the container logs directly instead of pulling from a separate monitoring tool, so nothing sits in a queue waiting to be checked.",
+  "Used the Claude API instead of a fixed list of known error types, since a static lookup can't explain something it hasn't seen before, and errors rarely repeat exactly.",
+  "Made the whole thing automatic. An error shows up, a report comes out. No step where someone has to trigger anything by hand."
 ]
-architecture: "Azure Monitor alerts feed a Python triage service, which calls Azure OpenAI for classification and remediation suggestions, escalating automatically for critical incidents."
+architecture: "A Python log watcher tails the Flask app's Docker logs, and on detecting an error, sends the surrounding context to the Claude API, which returns a plain-language incident report."
 results: [
-  "Alerts are triaged automatically before reaching an engineer, cutting the manual sorting step out of the loop.",
-  "Critical incidents are surfaced and escalated faster than in a manual, first-come-first-served alert queue.",
-  "Reduces alert fatigue by separating genuinely urgent issues from routine noise."
+  "A pipeline that goes from a simulated failure to an AI-written incident report without anyone touching it in between.",
+  "A report that actually reads like something useful, not a stack trace, something a person could act on right away."
 ]
 draft: false
 terminalCommand: "deploy incident-response"
-terminalLines: ["alert pipeline active", "Azure OpenAI connected"]
+terminalLines: ["log watcher active", "Claude API connected"]
 ---
 
-The AI Incident Response System is an Azure OpenAI–powered system that classifies infrastructure alerts, suggests remediation steps, and automatically escalates critical incidents.
+The AI Incident Response System is a Flask app with a Python log watcher that detects errors in Docker logs in real time and sends them to the Claude API for a plain-language incident report.

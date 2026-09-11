@@ -4,6 +4,7 @@ import BlogCover from "./BlogCover.astro";
 import layersIcon from "lucide-static/icons/layers.svg?raw";
 import forkIcon from "lucide-static/icons/git-fork.svg?raw";
 import routeIcon from "lucide-static/icons/route.svg?raw";
+import searchIcon from "lucide-static/icons/search.svg?raw";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -16,6 +17,7 @@ const coverIcons: Record<string, string> = {
   layers: layersIcon,
   fork: forkIcon,
   route: routeIcon,
+  search: searchIcon,
 };
 ---
 
@@ -31,6 +33,9 @@ const coverIcons: Record<string, string> = {
       accent={post.data.accent}
       label={post.data.title}
       aspect="aspect-[16/10]"
+      variant={post.data.coverVariant}
+      terminalCommand={post.data.terminalCommand}
+      terminalLines={post.data.terminalLines}
       class="transition-transform duration-500 group-hover:scale-105"
     />
   </a>

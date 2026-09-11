@@ -9,11 +9,13 @@ import TableOfContents from "../../components/TableOfContents.astro";
 import layersIcon from "lucide-static/icons/layers.svg?raw";
 import forkIcon from "lucide-static/icons/git-fork.svg?raw";
 import routeIcon from "lucide-static/icons/route.svg?raw";
+import searchIcon from "lucide-static/icons/search.svg?raw";
 
 const coverIcons: Record<string, string> = {
   layers: layersIcon,
   fork: forkIcon,
   route: routeIcon,
+  search: searchIcon,
 };
 
 export async function getStaticPaths() {
@@ -33,12 +35,6 @@ const allPosts = (await getCollection("blog")).sort(
 const otherPosts = allPosts.filter((p) => p.id !== post.id);
 
 const allCategories = Array.from(new Set(allPosts.flatMap((p) => p.data.categories)));
-
-const formattedDate = post.data.pubDate.toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
 
 const canonicalURL = new URL(`/blog/${post.id}`, Astro.site).toString();
 const shareText = encodeURIComponent(post.data.title);
@@ -80,26 +76,19 @@ const jsonLd = {
           accent={post.data.accent}
           label={post.data.title}
           aspect=""
+          variant={post.data.coverVariant}
+          terminalCommand={post.data.terminalCommand}
+          terminalLines={post.data.terminalLines}
           class="absolute inset-0 h-full w-full"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
         <div class="absolute inset-x-0 bottom-0 p-6 sm:p-10">
           <h1 class="font-display text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
             {post.data.title}
           </h1>
-          <div class="mt-4 flex items-center gap-3">
-            <img
-              src="/images/amna.png"
-              alt="Amna Albasher"
-              class="h-10 w-10 flex-shrink-0 rounded-full object-cover ring-2 ring-white/60"
-              width="40"
-              height="40"
-            />
-            <div>
-              <p class="text-sm font-semibold text-white">Amna Albasher</p>
-              <p class="text-xs text-white/75">Cloud DevOps &amp; MLOps Engineer &middot; {formattedDate}</p>
-            </div>
-          </div>
+          {post.data.subtitle && (
+            <p class="mt-2 max-w-2xl text-sm text-white/80 sm:text-base">{post.data.subtitle}</p>
+          )}
         </div>
       </div>
     </div>
@@ -110,6 +99,26 @@ const jsonLd = {
       </article>
 
       <aside class="mt-14 space-y-10 lg:sticky lg:top-24 lg:mt-0">
+        <form action="/blog" method="GET">
+          <label for="blog-sidebar-search" class="sr-only">Search articles</label>
+          <div class="relative">
+            <input
+              id="blog-sidebar-search"
+              type="search"
+              name="q"
+              placeholder="Search articles..."
+              class="w-full rounded-full border border-line bg-white px-4 py-2.5 pr-10 text-sm text-ink placeholder:text-ink-soft/60 focus:border-pink focus:outline-none focus:ring-1 focus:ring-pink"
+            />
+            <button
+              type="submit"
+              aria-label="Search"
+              class="absolute right-1 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-ink-soft transition-colors hover:text-pink"
+            >
+              <span class="search-submit-icon h-4 w-4" set:html={coverIcons.search} />
+            </button>
+          </div>
+        </form>
+
         <TableOfContents headings={headings} />
 
         <div>
@@ -131,26 +140,28 @@ const jsonLd = {
           </div>
         </div>
 
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">Recent Posts</p>
-          <ul class="mt-3 space-y-4">
-            {otherPosts.map((p) => (
-              <li>
-                <a href={`/blog/${p.id}`} class="group flex items-center gap-3">
-                  <span
-                    class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-white"
-                    style={{ background: p.data.accent }}
-                  >
-                    <span class="recent-post-icon h-5 w-5" set:html={coverIcons[p.data.coverIcon]} />
-                  </span>
-                  <span class="text-sm font-medium text-ink transition-colors group-hover:text-pink">
-                    {p.data.title}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {otherPosts.length > 0 && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">Recent Posts</p>
+            <ul class="mt-3 space-y-4">
+              {otherPosts.map((p) => (
+                <li>
+                  <a href={`/blog/${p.id}`} class="group flex items-center gap-3">
+                    <span
+                      class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg text-white"
+                      style={{ background: p.data.accent }}
+                    >
+                      <span class="recent-post-icon h-5 w-5" set:html={coverIcons[p.data.coverIcon]} />
+                    </span>
+                    <span class="text-sm font-medium text-ink transition-colors group-hover:text-pink">
+                      {p.data.title}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
     </div>
 
@@ -212,7 +223,8 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
-  .recent-post-icon svg {
+  .recent-post-icon svg,
+  .search-submit-icon svg {
     width: 100%;
     height: 100%;
     display: block;

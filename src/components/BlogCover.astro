@@ -1,13 +1,27 @@
 ---
+import TerminalMock from "./TerminalMock.astro";
+
 interface Props {
   icon: string;
   accent: string;
   label: string;
   class?: string;
   aspect?: string;
+  variant?: "gradient" | "terminal";
+  terminalCommand?: string;
+  terminalLines?: string[];
 }
 
-const { icon, accent, label, class: className = "", aspect = "aspect-[16/10]" } = Astro.props;
+const {
+  icon,
+  accent,
+  label,
+  class: className = "",
+  aspect = "aspect-[16/10]",
+  variant = "gradient",
+  terminalCommand = "",
+  terminalLines = [],
+} = Astro.props;
 
 function darken(hex: string, amount: number) {
   const c = hex.replace("#", "");
@@ -22,21 +36,30 @@ const accentDark = darken(accent, 40);
 const gradientId = `blog-grad-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<div
-  class:list={["relative overflow-hidden rounded-2xl", aspect, className]}
-  role="img"
-  aria-label={`${label} cover illustration`}
->
-  <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" class="h-full w-full">
-    <defs>
-      <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color={accent} />
-        <stop offset="100%" stop-color={accentDark} />
-      </linearGradient>
-    </defs>
-    <rect width="400" height="250" fill={`url(#${gradientId})`} />
-    <circle cx="60" cy="200" r="80" fill="white" opacity="0.08" />
-    <circle cx="350" cy="30" r="60" fill="white" opacity="0.1" />
-  </svg>
-  <span class="blog-cover-icon absolute inset-0 flex items-center justify-center text-white/90" set:html={icon} />
-</div>
+{variant === "terminal" ? (
+  <TerminalMock
+    command={terminalCommand}
+    lines={terminalLines}
+    aspect={aspect}
+    class={className}
+  />
+) : (
+  <div
+    class:list={["relative overflow-hidden rounded-2xl", aspect, className]}
+    role="img"
+    aria-label={`${label} cover illustration`}
+  >
+    <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" class="h-full w-full">
+      <defs>
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color={accent} />
+          <stop offset="100%" stop-color={accentDark} />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="250" fill={`url(#${gradientId})`} />
+      <circle cx="60" cy="200" r="80" fill="white" opacity="0.08" />
+      <circle cx="350" cy="30" r="60" fill="white" opacity="0.1" />
+    </svg>
+    <span class="blog-cover-icon absolute inset-0 flex items-center justify-center text-white/90" set:html={icon} />
+  </div>
+)}

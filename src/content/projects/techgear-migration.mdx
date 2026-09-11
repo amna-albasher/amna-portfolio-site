@@ -1,32 +1,36 @@
 ---
 title: "TechGear Plus Azure Migration"
-category: "Zero-Downtime Cloud Migration"
-summary: "A full migration of a production e-commerce store to Azure, with redesigned CI/CD pipelines, load balancing across availability zones, and a zero-downtime blue/green cutover."
+category: "Azure Migration Project"
+summary: "A migration project simulating moving a live e-commerce store to Azure, working through CI/CD redesign and a blue/green cutover."
 description: "A full migration of a production e-commerce store to Azure, with redesigned CI/CD pipelines, load balancing across availability zones, and a zero-downtime blue/green cutover."
 tech: ["Azure", "DevOps", "CI/CD", "Load Balancing", "Migration"]
 accent: "#22C55E"
 order: 9
 filters: ["Cloud", "DevOps"]
 github: "https://github.com/amna-albasher/techgear-plus-azure-migration"
+role: "Owned the migration scenario end to end, covering planning, Azure architecture, CI/CD redesign, resilience, and cutover strategy."
 problem: [
-  "Migrating a live, production e-commerce store to Azure without downtime meant the cutover itself couldn't be a point of failure. Customers needed uninterrupted service throughout, which rules out a traditional \"take it down, migrate, bring it back up\" approach entirely."
+  "Migrating an e-commerce store to Azure without downtime is a common but genuinely challenging scenario. The cutover cannot become the point of failure, and a typical \"take it down, migrate it, bring it back up\" approach isn't suitable when customers need to stay online throughout the migration."
 ]
 approach: [
-  "Redesigned the CI/CD pipelines to target the new Azure environment, set up load balancing across availability zones for resilience, and executed a blue/green cutover, running both the old and new environments in parallel and shifting traffic over only once the new environment was verified."
+  "I redesigned the CI/CD pipelines to target Azure, set up load balancing across availability zones for resilience, and implemented a blue/green cutover strategy.",
+  "The approach keeps the existing and new environments running in parallel. Traffic is shifted only after the new environment has been verified, rather than switching everything over at once."
 ]
 keyDecisions: [
-  "Blue/green deployment was chosen specifically to make the cutover itself reversible. If something had gone wrong post-cutover, traffic could shift back to the old environment immediately.",
-  "Load balancing across availability zones was set up as part of the migration, not left for a later hardening pass, so the new environment was more resilient than the one it replaced from day one."
+  "Used a blue/green approach because it keeps the cutover reversible. If something looked wrong after switching traffic, it could be moved back to the original environment.",
+  "Set up load balancing across availability zones as part of the migration itself, so the new environment has resilience built into the architecture from the start.",
+  "Redesigned the CI/CD pipelines to target the new Azure environment rather than reusing the existing pipeline as is."
 ]
 architecture: "The existing production store ran alongside a parallel Azure environment (blue/green), with a load balancer across availability zones handling the zero-downtime cutover."
 results: [
-  "Completed the migration to Azure with zero downtime for end users.",
-  "Load balancing across availability zones is now in place for ongoing resilience, not just for the migration window.",
-  "The blue/green approach meant the cutover carried a rollback path the entire time, reducing migration risk."
+  "Implemented and tested a blue/green migration strategy with a controlled and reversible traffic cutover.",
+  "Set up load balancing across availability zones as part of the new Azure environment.",
+  "Redesigned the CI/CD pipelines to target Azure.",
+  "Built a migration approach that could be applied to a real production cutover with the same resilience and rollback safety."
 ]
 draft: false
 terminalCommand: "migrate techgear-plus"
-terminalLines: ["cutover complete", "zero downtime confirmed"]
+terminalLines: ["cutover complete", "blue/green cutover tested"]
 ---
 
 TechGear Plus Azure Migration is a full migration of a production e-commerce store to Azure, with a zero-downtime blue/green cutover.

@@ -18,20 +18,78 @@ const posts = (await getCollection("blog")).sort(
   <Nav />
   <main class="py-16">
     <div class="mx-auto max-w-6xl px-6 lg:px-10">
-      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">Our Blog</p>
-      <h1 class="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-ink sm:text-5xl">
-        Writing
-      </h1>
-      <p class="mt-4 max-w-2xl text-base text-ink-soft">
-        Notes on Azure DevOps, Kubernetes platform engineering, FinOps, and MLOps.
-      </p>
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-pink">Our Blog</p>
+          <h1 class="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-ink sm:text-5xl">
+            Writing
+          </h1>
+          <p class="mt-4 max-w-2xl text-base text-ink-soft">
+            Notes on Azure DevOps, Kubernetes platform engineering, FinOps, and MLOps.
+          </p>
+        </div>
 
-      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <form action="/blog" method="GET" class="w-full sm:w-64">
+          <label for="blog-index-search" class="sr-only">Search articles</label>
+          <div class="relative">
+            <input
+              id="blog-index-search"
+              type="search"
+              name="q"
+              placeholder="Search articles..."
+              class="w-full rounded-full border border-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 focus:border-pink focus:outline-none focus:ring-1 focus:ring-pink"
+            />
+          </div>
+        </form>
+      </div>
+
+      <p data-search-status class="mt-8 hidden text-sm text-ink-soft"></p>
+
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" data-blog-grid>
         {posts.map((post) => (
-          <BlogCard post={post} />
+          <div data-post-card data-post-search={`${post.data.title} ${post.data.description} ${post.data.categories.join(" ")}`.toLowerCase()}>
+            <BlogCard post={post} />
+          </div>
         ))}
       </div>
+
+      <p data-empty-state class="mt-14 hidden text-sm text-ink-soft">
+        No articles match your search.
+      </p>
     </div>
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const query = (params.get("q") || "").trim().toLowerCase();
+
+  const searchInputs = document.querySelectorAll<HTMLInputElement>('input[name="q"]');
+  searchInputs.forEach((input) => {
+    input.value = params.get("q") || "";
+  });
+
+  if (query) {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-post-card]"));
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const haystack = card.dataset.postSearch || "";
+      const matches = haystack.includes(query);
+      card.classList.toggle("hidden", !matches);
+      if (matches) visibleCount += 1;
+    });
+
+    const status = document.querySelector<HTMLElement>("[data-search-status]");
+    if (status) {
+      status.textContent = `Showing results for "${params.get("q")}"`;
+      status.classList.remove("hidden");
+    }
+
+    const emptyState = document.querySelector<HTMLElement>("[data-empty-state]");
+    if (emptyState) {
+      emptyState.classList.toggle("hidden", visibleCount > 0);
+    }
+  }
+</script>
