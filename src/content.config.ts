@@ -19,6 +19,8 @@ const projects = defineCollection({
     role: z.string().optional(),
     keyDecisionsImage: z.string().optional(),
     keyDecisionsImageCaption: z.string().optional(),
+    coverImage: z.string().optional(),
+    coverImageFit: z.enum(["cover", "contain"]).default("cover"),
     draft: z.boolean().default(false),
     terminalCommand: z.string(),
     terminalLines: z.array(z.string()),

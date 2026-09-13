@@ -37,12 +37,23 @@ const filterTabs = ["All", "DevOps", "AI", "Cloud"] as const;
           data-filters={project.data.filters.join(",")}
           class="reveal group flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl"
         >
-          <a href={`/portfolio/${project.id}`} class="relative block">
-            <TerminalMock
-              command={project.data.terminalCommand}
-              lines={project.data.terminalLines}
-              class="transition-transform duration-500 group-hover:scale-105"
-            />
+          <a href={`/portfolio/${project.id}`} class="relative block overflow-hidden bg-[#0b0f14]">
+            {project.data.coverImage ? (
+              <img
+                src={project.data.coverImage}
+                alt={`${project.data.title} screenshot`}
+                class={`aspect-[4/3] w-full transition-transform duration-500 group-hover:scale-105 ${
+                  project.data.coverImageFit === "contain" ? "object-contain" : "object-cover"
+                }`}
+                loading="lazy"
+              />
+            ) : (
+              <TerminalMock
+                command={project.data.terminalCommand}
+                lines={project.data.terminalLines}
+                class="transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
           </a>
           <div class="flex flex-1 flex-col p-6">
             <span class="text-xs font-semibold uppercase tracking-wide text-pink">
