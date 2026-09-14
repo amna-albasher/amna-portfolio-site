@@ -17,11 +17,21 @@ export async function getStaticPaths() {
 const { project, next } = Astro.props;
 const { Content } = await render(project);
 
+const approachHeading = project.data.approachHeading ?? (project.id === "azure-finops-dashboard" ? "Solution" : "Approach");
+const approachSlug = approachHeading.toLowerCase();
+const walkthroughHeading = project.data.walkthroughHeading ?? "Dashboard Walkthrough";
+const showsArchitecture = project.data.showArchitecture ?? project.id !== "azure-finops-dashboard";
 const tocHeadings = [
   { depth: 2, slug: "problem", text: "Problem" },
-  { depth: 2, slug: "approach", text: "Approach" },
+  { depth: 2, slug: approachSlug, text: approachHeading },
+  ...(project.data.dashboardWalkthrough
+    ? [{ depth: 2, slug: "dashboard-walkthrough", text: walkthroughHeading }]
+    : []),
+  ...(project.data.technicalImplementation
+    ? [{ depth: 2, slug: "technical-implementation", text: "Technical Implementation" }]
+    : []),
   { depth: 2, slug: "key-decisions", text: "Key Decisions" },
-  { depth: 2, slug: "architecture", text: "Architecture" },
+  ...(showsArchitecture ? [{ depth: 2, slug: "architecture", text: "Architecture" }] : []),
   { depth: 2, slug: "results", text: "Results" },
 ];
 
@@ -48,7 +58,9 @@ const jsonLd = {
   <main class="py-16">
     <div class="mx-auto max-w-6xl px-6 lg:px-10">
      <div class="max-w-3xl">
-      <a href="/#portfolio" class="text-sm font-semibold text-pink">&larr; Back to Portfolio</a>
+      {project.id !== "devsecops-scorecard" && (
+        <a href="/#portfolio" class="text-sm font-semibold text-pink">&larr; Back to Portfolio</a>
+      )}
 
       <!-- 1. Header -->
       <span class="mt-6 block text-xs font-semibold uppercase tracking-[0.2em] text-pink">
@@ -65,15 +77,28 @@ const jsonLd = {
         ))}
       </ul>
 
+      {project.data.heroImage && (
+        <figure class="mx-0 mt-6 w-full">
+          <img
+            src={project.data.heroImage}
+            alt={project.data.heroImageAlt ?? project.data.title}
+            class="w-full rounded-2xl border border-line"
+            loading="eager"
+          />
+        </figure>
+      )}
+
       <div class="mt-4 flex flex-wrap items-center gap-4">
-        <a
-          href={project.data.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-sm font-semibold text-ink-soft transition-colors hover:text-pink"
-        >
-          GitHub &#8599;
-        </a>
+        {project.data.github && (
+          <a
+            href={project.data.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-semibold text-ink-soft transition-colors hover:text-pink"
+          >
+            GitHub &#8599;
+          </a>
+        )}
         {project.data.liveDemo && (
           <a
             href={project.data.liveDemo}
@@ -107,15 +132,57 @@ const jsonLd = {
           </div>
         </section>
 
-        <!-- 5. Approach -->
-        <section id="approach">
-          <h2 class="font-display text-2xl font-semibold text-ink">Approach</h2>
+        <!-- 5. Approach / Solution -->
+        <section id={approachSlug}>
+          <h2 class="font-display text-2xl font-semibold text-ink">
+            {approachHeading}
+          </h2>
           <div class="mt-3 space-y-3 text-base leading-relaxed text-ink-soft">
             {project.data.approach.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
           </div>
         </section>
+
+        {project.data.dashboardWalkthrough && (
+          <section id="dashboard-walkthrough">
+            <h2 class="font-display text-2xl font-semibold text-ink">{walkthroughHeading}</h2>
+            <div class="mt-5 space-y-8">
+              {project.data.dashboardWalkthrough.map((item) => (
+                <div>
+                  <h3 class="font-display text-xl font-semibold text-ink">{item.title}</h3>
+                  <p class="mt-2 text-base leading-relaxed text-ink-soft">{item.description}</p>
+                  {item.image && (
+                    <figure class="mx-0 mt-4 w-full">
+                      <img
+                        src={item.image}
+                        alt={item.imageAlt ?? item.title}
+                        class="w-full rounded-2xl border border-line"
+                        loading="lazy"
+                      />
+                    </figure>
+                  )}
+                  {!item.image && item.placeholder && (
+                    <div class="mt-4 flex aspect-[16/9] items-center justify-center rounded-2xl border border-dashed border-line bg-white text-sm font-medium text-ink-soft">
+                      {item.placeholder}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {project.data.technicalImplementation && (
+          <section id="technical-implementation">
+            <h2 class="font-display text-2xl font-semibold text-ink">Technical Implementation</h2>
+            <div class="mt-3 space-y-3 text-base leading-relaxed text-ink-soft">
+              {project.data.technicalImplementation.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </section>
+        )}
 
         <!-- Key Decisions -->
         <section id="key-decisions">
@@ -142,16 +209,17 @@ const jsonLd = {
           )}
         </section>
 
-        <!-- 6. Architecture -->
-        <section id="architecture">
-          <h2 class="font-display text-2xl font-semibold text-ink">Architecture</h2>
-          <p class="mt-3 text-base leading-relaxed text-ink-soft">{project.data.architecture}</p>
-          <ArchitectureDiagram
-            nodes={project.data.tech.slice(0, 4)}
-            accent={project.data.accent}
-            class="mt-4 aspect-[16/9]"
-          />
-        </section>
+        {showsArchitecture && (
+          <section id="architecture">
+            <h2 class="font-display text-2xl font-semibold text-ink">Architecture</h2>
+            <p class="mt-3 text-base leading-relaxed text-ink-soft">{project.data.architecture}</p>
+            <ArchitectureDiagram
+              nodes={project.data.architectureNodes ?? project.data.tech.slice(0, 4)}
+              accent={project.data.accent}
+              class="mt-4 aspect-[16/9]"
+            />
+          </section>
+        )}
 
         <!-- 7. Results -->
         <section id="results">

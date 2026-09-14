@@ -1,0 +1,57 @@
+---
+title: "Azure FinOps Dashboard"
+category: "Azure Cost Optimization & FinOps"
+summary: "Cloud costs can grow surprisingly quickly as infrastructure evolves. Test environments are left running, unused resources remain attached, and spending often goes unnoticed until the monthly invoice arrives. I built Azure FinOps Dashboard to bring cloud spend, budget tracking, forecasting, and waste detection into a single view. Instead of switching between multiple Azure reports, engineers can monitor spending trends, identify unnecessary costs, and keep track of budgets throughout the month from one dashboard."
+cardSummary: "Real-time Azure cloud cost dashboard with forecasting, budget tracking, and waste detection."
+description: "Azure FinOps Dashboard brings cloud spend, budget tracking, forecasting, and waste detection into a single view so engineers can monitor spending trends, identify unnecessary costs, and keep track of budgets throughout the month."
+tech: ["FastAPI", "Python", "Azure", "Chart.js"]
+coverImage: "/images/finops-dashboard-card.webp"
+heroImage: "/images/finops-dashboard-overview.png"
+heroImageAlt: "Azure FinOps Dashboard overview showing cloud cost and budget insights"
+accent: "#6366F1"
+order: 0
+filters: ["Cloud"]
+role: "I designed and built the project from the ground up, developing both the FastAPI backend and the frontend dashboard. Alongside the user interface, I implemented the REST API, cost analysis logic, forecasting, and waste detection workflow, with the backend structured so it can later integrate with the Azure Cost Management API without requiring changes to the frontend."
+problem: [
+  "As cloud environments grow, it's easy for costs to increase without anyone noticing. Temporary resources remain running, storage is left behind after deployments, and networking components continue generating charges long after they're no longer needed. By the time the monthly invoice arrives, understanding where the additional cost came from often requires reviewing multiple reports and Azure services.",
+  "Rather than reacting after invoices arrive, I wanted a way to bring those insights together into a single dashboard that could highlight spending trends, monitor budgets, forecast future costs, and surface waste before it became an expensive surprise."
+]
+approach: [
+  "At the core of the solution is a FastAPI backend that exposes Azure cost information through a collection of REST API endpoints. Each endpoint provides a specific dataset, allowing individual dashboard components to request only the information they need instead of relying on a single large response.",
+  "For demonstration purposes, the backend currently serves realistic Azure Cost Management mock data rather than connecting directly to a live Azure subscription. This keeps the application safe to share publicly while accurately reflecting common cloud spending patterns. Because the data layer is isolated from the presentation layer, switching to the Azure Cost Management API later requires minimal changes to the frontend.",
+  "The dashboard brings together spending trends, budget utilisation, resource analysis, forecasting, and waste detection into one interface. Instead of presenting billing information alone, it helps engineers understand where costs are coming from, why they're increasing, and where optimisation opportunities exist."
+]
+dashboardWalkthrough: [
+  { title: "Cost Overview", description: "The landing dashboard provides a high-level summary of month-to-date spending, budget utilisation, projected month-end costs, and estimated recoverable waste.", placeholder: "", image: "/images/finops-cost-overview.png", imageAlt: "Azure FinOps cost overview with month-to-date spending and budget utilisation" },
+  { title: "Spending Trends & Forecasting", description: "Daily cloud spending is visualised alongside a seven-day forecast, making it easier to identify unusual spending patterns before the monthly bill arrives.", placeholder: "", image: "/images/finops-spending-trends.png", imageAlt: "Azure spending trends and seven-day cost forecast" },
+  { title: "Resource Analysis", description: "Cloud costs are broken down by resource group and Azure service so users can quickly identify where the highest spending is occurring.", placeholder: "", image: "/images/finops-resource-analysis.png", imageAlt: "Azure resource cost analysis by resource group and service" },
+  { title: "Waste Detection", description: "Highlights idle virtual machines, orphaned managed disks, and unattached public IP addresses that may be generating unnecessary cloud costs.", placeholder: "", image: "/images/finops-waste-alerts.png", imageAlt: "Azure FinOps waste alerts for idle and unattached resources" },
+  { title: "Monthly Reports", description: "Monthly summaries combine spending trends, budget utilisation, and optimisation opportunities into a single report.", placeholder: "", image: "/images/finops-monthly-report.png", imageAlt: "Azure FinOps monthly cost and optimisation report" }
+]
+technicalImplementation: [
+  "The solution follows a simple client-server architecture that separates data processing from presentation.",
+  "The FastAPI backend exposes REST API endpoints for cost summaries, spending history, forecasting, resource analysis, waste alerts, service breakdowns, and budget information. The frontend is built with HTML, CSS, and Chart.js, consuming the API asynchronously to render interactive dashboards.",
+  "Realistic Azure Cost Management mock data is used for demonstrations, while the architecture is designed so the data layer can later be replaced with the Azure Cost Management API. The frontend and backend are deployed separately on Vercel, with GitHub Actions available for CI/CD."
+]
+keyDecisions: [
+  "Separated the frontend from the backend so both can evolve independently.",
+  "Used realistic Azure Cost Management mock data to avoid exposing production subscriptions or credentials.",
+  "Designed the API around individual dashboard components instead of one large response.",
+  "Focused on actionable optimisation insights rather than raw billing information.",
+  "Included month-end forecasting to help users anticipate future cloud costs."
+]
+architecture: "Azure Cost Management Data (Mock Data / Live API) → FastAPI Backend → Cost Analysis / Forecast Engine / Waste Detection → REST API Endpoints → HTML • CSS • Chart.js Dashboard"
+architectureNodes: ["Azure Cost Data", "FastAPI Backend", "Analysis Engines", "REST API", "Chart.js Dashboard"]
+results: [
+  "Combined Azure spending, forecasting, and optimisation insights into a single interactive dashboard.",
+  "Highlighted idle virtual machines, orphaned managed disks, and unattached public IP addresses.",
+  "Improved visibility into spending trends through interactive charts and KPI cards.",
+  "Built a modular architecture that can transition from mock data to the Azure Cost Management API.",
+  "Created a practical FinOps dashboard that supports day-to-day cloud cost optimisation."
+]
+draft: false
+terminalCommand: "run azure-finops-dashboard"
+terminalLines: ["cost data loaded", "forecast generated", "waste alerts ready"]
+---
+
+Azure FinOps Dashboard demonstrates how cloud cost data can be transformed into actionable insights through a modern web application, helping engineering teams monitor Azure spending proactively instead of reacting after monthly invoices are generated.

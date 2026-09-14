@@ -1,36 +1,56 @@
 ---
 title: "TechGear Plus Azure Migration"
-category: "Azure Migration Project"
-summary: "A migration project simulating moving a live e-commerce store to Azure, working through CI/CD redesign and a blue/green cutover."
-description: "A full migration of a production e-commerce store to Azure, with redesigned CI/CD pipelines, load balancing across availability zones, and a zero-downtime blue/green cutover."
-tech: ["Azure", "DevOps", "CI/CD", "Load Balancing", "Migration"]
+category: "Azure Migration & Modernization"
+summary: "A simulated end-to-end migration of a production e-commerce platform to Microsoft Azure, covering infrastructure modernization, CI/CD redesign, and a zero-downtime blue/green deployment strategy."
+description: "A simulated end-to-end migration of a production e-commerce platform to Microsoft Azure, covering infrastructure modernization, CI/CD redesign, and a zero-downtime blue/green deployment strategy."
+tech: ["Azure", "Azure DevOps", "CI/CD", "Blue/Green Deployment"]
 accent: "#22C55E"
 order: 9
 filters: ["Cloud", "DevOps"]
 github: "https://github.com/amna-albasher/techgear-plus-azure-migration"
-role: "Owned the migration scenario end to end, covering planning, Azure architecture, CI/CD redesign, resilience, and cutover strategy."
+role: "I designed the migration strategy and target Azure architecture for a simulated production e-commerce platform. The project focused on modernising the deployment process, improving application reliability, and reducing deployment risk through automated CI/CD pipelines and a blue/green deployment approach. Alongside the migration plan, I documented the deployment workflow, validation process, and rollback strategy to demonstrate how a production workload could be moved to Azure with minimal downtime."
 problem: [
-  "Migrating an e-commerce store to Azure without downtime is a common but genuinely challenging scenario. The cutover cannot become the point of failure, and a typical \"take it down, migrate it, bring it back up\" approach isn't suitable when customers need to stay online throughout the migration."
+  "Migrating a production e-commerce platform to the cloud involves more than simply moving applications to new infrastructure. Existing deployment processes are often manual, releases introduce unnecessary downtime, and rollback procedures are difficult to execute when problems occur.",
+  "The objective of this project was to design a migration approach that modernised both the infrastructure and the deployment workflow, allowing new releases to be deployed safely while maintaining service availability throughout the migration."
 ]
+approachHeading: "Solution"
 approach: [
-  "I redesigned the CI/CD pipelines to target Azure, set up load balancing across availability zones for resilience, and implemented a blue/green cutover strategy.",
-  "The approach keeps the existing and new environments running in parallel. Traffic is shifted only after the new environment has been verified, rather than switching everything over at once."
+  "The migration was planned as a phased process rather than a single cutover. Instead of moving every component at once, the target Azure environment was designed first, followed by deployment automation, application validation, and production cutover planning.",
+  "The deployment workflow was redesigned using a CI/CD pipeline that automates application builds and deployments. To minimise deployment risk, a blue/green deployment strategy was introduced, allowing new application versions to be validated before directing production traffic to the updated environment. A rollback plan was also included so traffic could quickly return to the previous version if issues were detected after deployment.",
+  "The overall solution demonstrates how infrastructure modernisation and deployment automation work together to improve reliability during cloud migration projects."
+]
+walkthroughHeading: "Migration Process"
+dashboardWalkthrough: [
+  { title: "Existing Environment", description: "The project begins with a review of the existing application architecture and deployment workflow to identify migration challenges, dependencies, and opportunities for improvement.", placeholder: "" },
+  { title: "Target Azure Architecture", description: "A target architecture is designed using Azure services to provide a scalable, maintainable, and cloud-ready environment capable of supporting future growth.", placeholder: "" },
+  { title: "CI/CD Pipeline", description: "The deployment pipeline automates application build, validation, and deployment, reducing manual effort while improving deployment consistency across environments.", placeholder: "" },
+  { title: "Blue/Green Deployment", description: "A blue/green deployment strategy allows the new application version to be deployed alongside the existing environment before production traffic is switched, reducing downtime and simplifying rollback if problems occur.", placeholder: "" },
+  { title: "Migration Validation", description: "Following deployment, validation checks confirm application availability, deployment success, and readiness before completing the migration.", placeholder: "" }
+]
+technicalImplementation: [
+  "The project follows a modern Azure deployment workflow that separates infrastructure planning, deployment automation, and operational validation.",
+  "The migration architecture incorporates Azure hosting services together with automated deployment pipelines that manage application releases consistently across environments. Blue/green deployment allows production traffic to be switched only after the new environment has been validated, reducing deployment risk while improving release confidence.",
+  "The migration design also includes monitoring, validation, and rollback planning so operational issues can be identified and resolved quickly after deployment."
 ]
 keyDecisions: [
-  "Used a blue/green approach because it keeps the cutover reversible. If something looked wrong after switching traffic, it could be moved back to the original environment.",
-  "Set up load balancing across availability zones as part of the migration itself, so the new environment has resilience built into the architecture from the start.",
-  "Redesigned the CI/CD pipelines to target the new Azure environment rather than reusing the existing pipeline as is."
+  "Planned the migration as a phased rollout instead of a single cutover to reduce operational risk.",
+  "Redesigned the deployment workflow using CI/CD automation to improve consistency and reduce manual deployments.",
+  "Selected a blue/green deployment strategy to minimise downtime and provide a straightforward rollback path.",
+  "Included post-deployment validation before switching production traffic to the new environment.",
+  "Considered operational monitoring as part of the migration rather than treating it as a separate activity after deployment."
 ]
-architecture: "The existing production store ran alongside a parallel Azure environment (blue/green), with a load balancer across availability zones handling the zero-downtime cutover."
+architecture: ""
+showArchitecture: false
 results: [
-  "Implemented and tested a blue/green migration strategy with a controlled and reversible traffic cutover.",
-  "Set up load balancing across availability zones as part of the new Azure environment.",
-  "Redesigned the CI/CD pipelines to target Azure.",
-  "Built a migration approach that could be applied to a real production cutover with the same resilience and rollback safety."
+  "Designed a complete Azure migration strategy for a production-style e-commerce application.",
+  "Demonstrated how CI/CD automation can simplify cloud deployments.",
+  "Reduced deployment risk through a blue/green deployment model with rollback planning.",
+  "Improved deployment consistency by replacing manual release processes with an automated pipeline.",
+  "Produced a repeatable migration approach that can be adapted for similar Azure modernisation projects."
 ]
 draft: false
 terminalCommand: "migrate techgear-plus"
 terminalLines: ["cutover complete", "blue/green cutover tested"]
 ---
 
-TechGear Plus Azure Migration is a full migration of a production e-commerce store to Azure, with a zero-downtime blue/green cutover.
+TechGear Plus Azure Migration demonstrates how careful planning, deployment automation, and modern release strategies can simplify cloud migration while reducing operational risk. Rather than focusing only on infrastructure, the project highlights the importance of CI/CD, validation, and rollback planning when moving production workloads to Azure.

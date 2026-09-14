@@ -1,0 +1,44 @@
+---
+title: "DevSecOps Scorecard"
+category: "Automated GitHub Security Assessment"
+summary: "A FastAPI application that analyzes public GitHub repositories across CI/CD pipelines, branch protection, secrets management, container security, and compliance documentation, then turns the findings into a clear DevSecOps scorecard with prioritized recommendations."
+description: "A FastAPI application that evaluates repository configuration, CI/CD pipelines, branch protection, secrets management, container security, and compliance documentation, helping developers identify security gaps and improve repository readiness before software reaches production."
+tech: ["FastAPI", "Python", "GitHub API", "DevSecOps"]
+accent: "#0EA5E9"
+order: 8
+filters: ["DevOps"]
+github: "https://github.com/amna-albasher/devsecops-scorecard"
+liveDemo: "https://devsecops-scorecard.vercel.app"
+coverImage: "/images/devsecops-scorecard-card.png"
+role: "Designed and developed the application end to end, including the FastAPI backend, GitHub API integration, repository analysis engine, scoring model, and web interface. The project was created to simplify repository security reviews by consolidating multiple DevSecOps checks into a single assessment that developers can run against any public GitHub repository."
+problem: [
+  "As software projects grow, maintaining consistent security standards across repositories becomes increasingly difficult. Important controls such as branch protection, CI/CD workflows, secrets management, container security, and project documentation are often configured differently between repositories, making manual reviews slow and inconsistent.",
+  "I wanted to build a lightweight assessment tool that provides an immediate overview of a repository's security posture while helping developers identify missing controls before code reaches production. Instead of manually reviewing repository settings and workflows, the application brings the most important security signals together in a single report."
+]
+approach: [
+  "The application accepts a public GitHub repository URL and retrieves repository metadata using the GitHub API. Rather than relying on manually entered information, each assessment is generated directly from the repository's current configuration to provide consistent and repeatable results.",
+  "The collected data is processed by a security analysis engine that evaluates the repository across five practical DevSecOps categories: CI/CD pipelines, branch protection, secrets management, container security, and compliance documentation. Each category contributes to an overall security score while still exposing individual findings. This allows developers to quickly understand both the overall security posture and the specific areas that require attention.",
+  "The application was intentionally designed as a lightweight web tool that performs repository assessments without cloning repositories or requiring additional setup, making it suitable for demonstrations, learning, and rapid engineering reviews."
+]
+keyDecisions: [
+  "Used the GitHub API as the primary data source so every assessment reflects the latest repository configuration without requiring repository cloning or local analysis.",
+  "Separated data collection from the scoring engine, making it easier to extend the application with additional security checks while keeping the assessment logic independent of the user interface.",
+  "Grouped security checks into five engineering categories to provide a balanced overview of repository security while keeping the final score easy to interpret.",
+  "Designed a weighted scoring model so critical security controls contribute more heavily to the overall assessment than lower-priority findings.",
+  "Focused on actionable recommendations instead of pass/fail results, helping developers understand what should be improved rather than simply highlighting issues."
+]
+architecture: "The application accepts a public GitHub repository URL and retrieves repository metadata through the GitHub API. The repository information is passed to a security analysis engine that evaluates each DevSecOps category, calculates the overall security score, and returns the results to the FastAPI application for presentation through the web interface."
+architectureNodes: ["FastAPI", "GitHub API", "Security Analysis Engine", "Scorecard Dashboard"]
+results: [
+  "Generated an instant DevSecOps assessment for any public GitHub repository.",
+  "Evaluated repository security across CI/CD pipelines, branch protection, secrets management, container security, and compliance documentation.",
+  "Combined multiple engineering checks into a single security score with category-level insights.",
+  "Highlighted missing security controls with clear, actionable recommendations that help prioritize improvements.",
+  "Reduced a scattered manual repository review into one repeatable assessment that gives engineering teams a prioritized path from identified gaps to production-ready security controls."
+]
+draft: false
+terminalCommand: "run devsecops-scorecard"
+terminalLines: ["repository connected", "security checks complete", "scorecard generated"]
+---
+
+DevSecOps Scorecard is a FastAPI application that helps developers and engineering teams evaluate repository security using practical DevSecOps controls. By combining GitHub repository analysis with a structured scoring model, the application provides a fast and consistent way to identify security gaps and improve repository readiness before deployment.

@@ -62,7 +62,7 @@ const filterTabs = ["All", "DevOps", "AI", "Cloud"] as const;
             <a href={`/portfolio/${project.id}`}>
               <h3 class="mt-2 font-display text-xl font-semibold text-ink">{project.data.title}</h3>
             </a>
-            <p class="mt-2 line-clamp-4 h-[91px] overflow-hidden text-sm leading-relaxed text-ink-soft">{project.data.summary}</p>
+            <p class="mt-2 line-clamp-4 h-[91px] overflow-hidden text-sm leading-relaxed text-ink-soft">{project.data.cardSummary ?? project.data.summary}</p>
             <ul class="mt-4 flex flex-wrap gap-2">
               {project.data.tech.slice(0, 4).map((t) => (
                 <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-soft">
@@ -77,14 +77,16 @@ const filterTabs = ["All", "DevOps", "AI", "Cloud"] as const;
               >
                 View Project <span aria-hidden="true">&rarr;</span>
               </a>
-              <a
-                href={project.data.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-xs font-medium text-ink-soft transition-colors hover:text-pink"
-              >
-                GitHub &#8599;
-              </a>
+              {project.data.github && (
+                <a
+                  href={project.data.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-medium text-ink-soft transition-colors hover:text-pink"
+                >
+                  GitHub &#8599;
+                </a>
+              )}
               {project.data.liveDemo && (
                 <a
                   href={project.data.liveDemo}

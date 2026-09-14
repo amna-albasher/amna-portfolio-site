@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title description">
+  <title id="title">DevSecOps Scorecard placeholder</title>
+  <desc id="description">Placeholder thumbnail to be replaced with a project screenshot.</desc>
+  <rect width="1200" height="900" fill="#0b0f14"/>
+  <rect x="72" y="72" width="1056" height="756" rx="40" fill="#111827" stroke="#374151" stroke-width="4"/>
+  <text x="600" y="425" fill="#faf6f0" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">DevSecOps Scorecard</text>
+  <text x="600" y="500" fill="#9ca3af" font-family="Arial, sans-serif" font-size="28" text-anchor="middle">Thumbnail coming soon</text>
+</svg>
