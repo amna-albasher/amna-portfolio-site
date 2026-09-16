@@ -1,0 +1,64 @@
+---
+title: "MerchantGuard"
+category: "END-TO-END MLOPS SYSTEM"
+summary: "End-to-end MLOps system for merchant churn prediction with MLflow model registry, FastAPI serving, Kubernetes deployment, Prometheus/Grafana monitoring, Evidently drift detection, automated retraining, and GitHub Actions CI/CD."
+cardSummary: "MLOps pipeline for merchant churn prediction with model versioning, Kubernetes serving, drift detection, and automated retraining."
+description: "End-to-end MLOps system for merchant churn prediction with MLflow model registry, FastAPI serving, Kubernetes deployment, Prometheus/Grafana monitoring, Evidently drift detection, automated retraining, and GitHub Actions CI/CD."
+tech: ["MLOps", "MLflow", "FastAPI", "Kubernetes"]
+accent: "#2563EB"
+order: -1
+filters: ["AI", "DevOps"]
+github: "https://github.com/amna-albasher/merchantguard-mlops"
+coverImage: "/images/merchantguard-card.png"
+heroImage: "/images/merchantguard-app-dashboard.png"
+heroImageAlt: "MerchantGuard retention workspace showing a synthetic merchant risk queue and account assessment"
+role: |-
+  MerchantGuard is a merchant churn MLOps project built around a synthetic SaaS retention dataset.
+
+  I handled the pipeline end to end: training and validation, MLflow model versioning, FastAPI serving, Docker and Kubernetes deployment, service monitoring, drift detection, automated retraining, and CI/CD.
+
+  The goal was to build the workflow around the model, not just the model itself.
+problem: [
+  "For a retention team, the useful prediction is not whether a merchant has already churned. It is whether the account is showing enough warning signs to act before renewal or cancellation.",
+  "That means the model also needs a reliable way to be versioned, validated, served, monitored, and retrained as the data changes.",
+  "MerchantGuard was built around that workflow."
+]
+approach: [
+  "I started with a time-based train and validation split and a Logistic Regression baseline.",
+  "The model uses merchant activity signals such as weekly logins, feature adoption, support tickets, support sentiment, contract value, plan tier, and product-release activity.",
+  "I tracked PR-AUC, ROC-AUC, precision, recall, and top-decile churn capture. The last metric matters because a Customer Success team may only have capacity to focus on a small percentage of accounts.",
+  "MLflow handles experiment tracking and model registration. New models enter the registry as candidates, while the validated production model keeps the champion alias.",
+  "FastAPI serves the champion model. Docker packages the service, Kubernetes runs it, Prometheus and Grafana monitor the API, Evidently checks for feature drift, and GitHub Actions runs the CI pipeline."
+]
+walkthroughHeading: "System Walkthrough"
+dashboardWalkthrough: [
+  { title: "Model Registry", description: "MLflow keeps the model history in one place.\n\nVersion 3 is the current champion because it passed the validation gate. Later retraining runs created newer versions, including version 6, but those versions remain candidates until they are validated.\n\nThat separation is deliberate: a newer model is not automatically a better production model.", placeholder: "", image: "/images/mlflow-model-registry.png", imageAlt: "MerchantGuard MLflow model registry with model versions and aliases" },
+  { title: "Service Monitoring", description: "The FastAPI service exposes Prometheus metrics, which Grafana reads through a provisioned datasource.\n\nDuring the final run, the dashboard showed:\n\n- 0% API error rate\n- 1,881 total API requests\n- approximately 95 ms P95 latency\n\nThe Grafana datasource and dashboard are stored in the repository, so the monitoring setup can be recreated instead of configured manually each time.", placeholder: "", image: "/images/grafana-monitoring-dashboard.png", imageAlt: "MerchantGuard Grafana dashboard showing API traffic, errors, and latency" },
+  { title: "Drift Detection", description: "To test the monitoring path, I generated a deliberately shifted version of the merchant dataset.\n\nEvidently compared the reference data with the shifted data and detected drift in 12 of 13 columns, or 92.3%.\n\nThe dataset-level drift threshold was set to 0.50, so this triggered the retraining path.", placeholder: "", image: "/images/evidently-drift-detected.png", imageAlt: "Evidently drift report detecting drift in MerchantGuard data" },
+  { title: "Automated Retraining", description: "Once the drift threshold is crossed, MerchantGuard runs the retraining script automatically and registers the result as a new MLflow candidate.\n\nOne retraining run produced:\n\n- PR-AUC: 0.6729\n- ROC-AUC: 0.4918\n- Precision: 0.6773\n- Recall: 1.0000\n- Top 10% capture: 0.0990\n\nThe ROC-AUC is the important part here. The model retrained successfully, but the result was weak.\n\nThat is why retraining and promotion are separate steps. Drift can justify training a new model, but it does not justify replacing the champion without validation.", placeholder: "", image: "/images/automatic-retraining.png", imageAlt: "MerchantGuard automated retraining run and model evaluation" },
+  { title: "CI/CD", description: "GitHub Actions recreates the main workflow outside my local machine.\n\nThe pipeline installs dependencies, generates the synthetic dataset, runs drift monitoring and retraining, trains and validates a candidate, runs the automated tests, builds the Docker image, starts the container, and checks the health endpoint.\n\nThe final test run passed all 5 API tests, and the workflow completed successfully on GitHub.", placeholder: "", image: "/images/github-actions-success.png", imageAlt: "Successful MerchantGuard GitHub Actions pipeline" }
+]
+technicalImplementation: [
+  "Python and scikit-learn handle training and evaluation.",
+  "MLflow manages experiments, registered model versions, and candidate/champion aliases.",
+  "FastAPI serves predictions and exposes health and Prometheus endpoints.",
+  "Docker and Kubernetes provide the runtime layer.",
+  "Prometheus and Grafana monitor service behaviour, while Evidently monitors changes in the model input data.",
+  "GitHub Actions runs the automated validation, test, build, and container-health workflow."
+]
+keyDecisions: [
+  "Newest does not mean production\n\nRetrained models are registered as candidates. The champion only changes after validation.",
+  "Service health and model health are different problems\n\nPrometheus and Grafana tell me whether the API is healthy. Evidently tells me whether the input data is moving away from the reference distribution.",
+  "Monitoring should be reproducible\n\nThe Grafana datasource and dashboard definitions live in the repository, so the monitoring stack can be rebuilt from source-controlled configuration."
+]
+architecture: "Synthetic merchant data flows through the training pipeline and MLflow registry. A validated champion is served by FastAPI in Kubernetes. Prometheus and Grafana monitor the service; Evidently detects data drift and triggers retraining, which registers a new candidate for validation. GitHub Actions checks the workflow and container health."
+architectureNodes: ["Training Data", "MLflow Registry", "FastAPI", "Kubernetes", "Monitoring"]
+results: [
+  "By the end of the build, MerchantGuard had:\n\n- a working candidate/champion lifecycle in MLflow\n- a FastAPI service running through Kubernetes\n- live Prometheus metrics in Grafana\n- Evidently detecting 92.3% simulated feature drift\n- drift-triggered retraining creating a new MLflow candidate\n- 5 passing API tests\n- a successful GitHub Actions pipeline\n- container health validation after the Docker build"
+]
+draft: false
+terminalCommand: "deploy merchantguard"
+terminalLines: ["model registered", "API serving", "monitoring active"]
+---
+
+The useful part of MerchantGuard is the feedback loop: deploy a validated model, observe the service and its data, retrain when the data moves, then validate again before anything replaces the champion.

@@ -1,0 +1,119 @@
+<div class="mt-4 overflow-hidden rounded-2xl border border-line bg-white p-4 sm:p-6" role="img" aria-label="MerchantGuard architecture: synthetic merchant data is trained and validated in MLflow; the champion runs through FastAPI, Docker, and Kubernetes; Prometheus and Grafana monitor the service; Evidently detects drift and retraining returns a new candidate to MLflow. GitHub Actions supports validation, build, and deployment.">
+  <svg class="hidden w-full md:block" viewBox="0 0 960 625" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <marker id="mg-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M1 1 L7 4 L1 7" fill="none" stroke="#4c3ae3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </marker>
+      <marker id="mg-arrow-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M1 1 L7 4 L1 7" fill="none" stroke="#8d889b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </marker>
+    </defs>
+
+    <!-- Model lifecycle -->
+    <rect x="12" y="12" width="936" height="190" rx="18" fill="#faf9fd" stroke="#e4dbcb" />
+    <text x="36" y="42" fill="#4c3ae3" font-size="12" font-weight="700" letter-spacing="1.8">MODEL LIFECYCLE</text>
+    <rect x="36" y="80" width="190" height="76" rx="14" fill="white" stroke="#d9d5e5" />
+    <text x="131" y="111" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Synthetic</text>
+    <text x="131" y="132" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Merchant Data</text>
+    <rect x="274" y="80" width="190" height="76" rx="14" fill="white" stroke="#d9d5e5" />
+    <text x="369" y="122" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Train + Validate</text>
+    <path d="M226 118 H264" fill="none" stroke="#4c3ae3" stroke-width="2" marker-end="url(#mg-arrow)" />
+    <path d="M464 118 H501" fill="none" stroke="#4c3ae3" stroke-width="2" marker-end="url(#mg-arrow)" />
+
+    <rect x="511" y="60" width="413" height="120" rx="15" fill="white" stroke="#4c3ae3" stroke-width="1.5" />
+    <text x="531" y="88" fill="#16161a" font-size="16" font-weight="700">MLflow Registry</text>
+    <rect x="531" y="107" width="104" height="46" rx="10" fill="#f0edff" />
+    <text x="583" y="135" text-anchor="middle" fill="#3b2bb8" font-size="13" font-weight="650">Candidate</text>
+    <rect x="665" y="107" width="112" height="46" rx="10" fill="#f7f5fc" stroke="#d9d5e5" />
+    <text x="721" y="135" text-anchor="middle" fill="#4a4a52" font-size="12" font-weight="650">Validation Gate</text>
+    <rect x="807" y="107" width="96" height="46" rx="10" fill="#4c3ae3" />
+    <text x="855" y="135" text-anchor="middle" fill="white" font-size="13" font-weight="650">Champion</text>
+    <path d="M635 130 H655 M777 130 H797" fill="none" stroke="#4c3ae3" stroke-width="1.8" marker-end="url(#mg-arrow)" />
+
+    <!-- Serving and CI/CD -->
+    <rect x="12" y="224" width="936" height="143" rx="18" fill="#faf9fd" stroke="#e4dbcb" />
+    <text x="36" y="254" fill="#4c3ae3" font-size="12" font-weight="700" letter-spacing="1.8">SERVING</text>
+    <rect x="38" y="282" width="174" height="62" rx="12" fill="white" stroke="#d9d5e5" stroke-dasharray="5 4" />
+    <text x="125" y="308" text-anchor="middle" fill="#4a4a52" font-size="14" font-weight="650">GitHub Actions</text>
+    <text x="125" y="328" text-anchor="middle" fill="#6b6776" font-size="11">CI/CD · validate / build / deploy</text>
+    <rect x="280" y="282" width="150" height="62" rx="12" fill="white" stroke="#d9d5e5" />
+    <text x="355" y="320" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">FastAPI</text>
+    <rect x="514" y="282" width="150" height="62" rx="12" fill="white" stroke="#d9d5e5" />
+    <text x="589" y="320" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Docker</text>
+    <rect x="748" y="282" width="150" height="62" rx="12" fill="white" stroke="#d9d5e5" />
+    <text x="823" y="320" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Kubernetes</text>
+    <path d="M125 344 V356 H823 V345" fill="none" stroke="#8d889b" stroke-width="1.7" stroke-dasharray="5 5" marker-end="url(#mg-arrow-muted)" />
+    <path d="M430 313 H504 M664 313 H738" fill="none" stroke="#4c3ae3" stroke-width="2" marker-end="url(#mg-arrow)" />
+    <path d="M855 180 V210 H355 V272" fill="none" stroke="#4c3ae3" stroke-width="2" marker-end="url(#mg-arrow)" />
+    <text x="703" y="206" text-anchor="middle" fill="#4a4a52" font-size="13" font-weight="600">Champion deployed</text>
+
+    <!-- Monitoring and retraining -->
+    <rect x="12" y="407" width="412" height="180" rx="18" fill="#faf9fd" stroke="#e4dbcb" />
+    <text x="36" y="437" fill="#4c3ae3" font-size="12" font-weight="700" letter-spacing="1.6">SERVICE MONITORING</text>
+    <rect x="43" y="474" width="156" height="65" rx="12" fill="white" stroke="#d9d5e5" />
+    <text x="121" y="513" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Prometheus</text>
+    <rect x="237" y="474" width="156" height="65" rx="12" fill="white" stroke="#d9d5e5" />
+    <text x="315" y="513" text-anchor="middle" fill="#16161a" font-size="15" font-weight="650">Grafana</text>
+    <path d="M199 506 H227" fill="none" stroke="#4c3ae3" stroke-width="2" marker-end="url(#mg-arrow)" />
+    <path d="M823 344 V389 H121 V464" fill="none" stroke="#8d889b" stroke-width="1.8" marker-end="url(#mg-arrow-muted)" />
+
+    <rect x="450" y="407" width="498" height="180" rx="18" fill="#faf9fd" stroke="#e4dbcb" />
+    <text x="474" y="437" fill="#4c3ae3" font-size="12" font-weight="700" letter-spacing="1.5">DATA DRIFT + RETRAINING</text>
+    <rect x="470" y="465" width="132" height="48" rx="10" fill="white" stroke="#d9d5e5" />
+    <text x="536" y="485" text-anchor="middle" fill="#16161a" font-size="12" font-weight="650">Current Merchant</text>
+    <text x="536" y="501" text-anchor="middle" fill="#16161a" font-size="12" font-weight="650">Data</text>
+    <rect x="631" y="465" width="118" height="48" rx="10" fill="white" stroke="#d9d5e5" />
+    <text x="690" y="495" text-anchor="middle" fill="#16161a" font-size="13" font-weight="650">Evidently</text>
+    <rect x="778" y="465" width="148" height="48" rx="10" fill="#fff" stroke="#4c3ae3" />
+    <text x="852" y="495" text-anchor="middle" fill="#3b2bb8" font-size="13" font-weight="650">Drift &gt; 0.50</text>
+    <path d="M602 489 H621 M749 489 H768" fill="none" stroke="#4c3ae3" stroke-width="1.8" marker-end="url(#mg-arrow)" />
+    <rect x="631" y="529" width="118" height="42" rx="10" fill="#f0edff" />
+    <text x="690" y="555" text-anchor="middle" fill="#3b2bb8" font-size="13" font-weight="650">New Candidate</text>
+    <rect x="778" y="529" width="148" height="42" rx="10" fill="white" stroke="#d9d5e5" />
+    <text x="852" y="555" text-anchor="middle" fill="#16161a" font-size="13" font-weight="650">Retrain</text>
+    <path d="M852 513 V519 M778 550 H759" fill="none" stroke="#4c3ae3" stroke-width="1.8" marker-end="url(#mg-arrow)" />
+
+    <!-- Candidate returns to MLflow rather than ending at retraining. -->
+    <path d="M690 571 V602 H938 V24 H520 V130 H531" fill="none" stroke="#4c3ae3" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#mg-arrow)" />
+    <text x="778" y="617" fill="#4c3ae3" font-size="11" font-weight="600">register candidate</text>
+  </svg>
+
+  <div class="space-y-3 md:hidden" aria-hidden="true">
+    <div class="rounded-xl border border-line bg-[#faf9fd] p-4">
+      <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-pink">Model lifecycle</p>
+      <div class="mt-3 space-y-2 text-center text-sm font-semibold text-ink">
+        <div class="rounded-lg border border-line bg-white p-2.5">Synthetic Merchant Data</div>
+        <div class="text-pink">↓</div>
+        <div class="rounded-lg border border-line bg-white p-2.5">Train + Validate</div>
+        <div class="text-pink">↓</div>
+        <div class="rounded-lg border border-pink bg-white p-3">
+          <p>MLflow Registry</p>
+          <p class="mt-2 text-xs font-medium text-ink-soft">Candidate → Validation Gate → Champion</p>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-xl border border-line bg-[#faf9fd] p-4">
+      <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-pink">Serving</p>
+      <p class="mt-2 text-xs text-ink-soft">Champion model</p>
+      <div class="mt-2 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1 text-center text-xs font-semibold text-ink">
+        <div class="rounded-lg border border-line bg-white px-1 py-3">FastAPI</div>
+        <span class="text-pink">→</span>
+        <div class="rounded-lg border border-line bg-white px-1 py-3">Docker</div>
+        <span class="text-pink">→</span>
+        <div class="rounded-lg border border-line bg-white px-1 py-3">Kubernetes</div>
+      </div>
+      <p class="mt-3 text-xs text-ink-soft">GitHub Actions → validation / build / deployment</p>
+    </div>
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="rounded-xl border border-line bg-[#faf9fd] p-4">
+        <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-pink">Service Monitoring</p>
+        <p class="mt-3 text-xs font-semibold text-ink">Kubernetes / FastAPI → Prometheus → Grafana</p>
+      </div>
+      <div class="rounded-xl border border-line bg-[#faf9fd] p-4">
+        <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-pink">Data drift + retraining</p>
+        <p class="mt-3 text-xs font-semibold leading-relaxed text-ink">Current Merchant Data → Evidently → Drift &gt; 0.50 → Retrain</p>
+        <p class="mt-2 rounded-lg bg-pink-soft px-2 py-2 text-xs font-semibold text-pink">↩ New Candidate → MLflow Registry</p>
+      </div>
+    </div>
+  </div>
+</div>

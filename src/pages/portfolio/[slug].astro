@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import ArchitectureDiagram from "../../components/ArchitectureDiagram.astro";
+import MerchantGuardArchitecture from "../../components/MerchantGuardArchitecture.astro";
 import TableOfContents from "../../components/TableOfContents.astro";
 
 export async function getStaticPaths() {
@@ -213,11 +214,15 @@ const jsonLd = {
           <section id="architecture">
             <h2 class="font-display text-2xl font-semibold text-ink">Architecture</h2>
             <p class="mt-3 text-base leading-relaxed text-ink-soft">{project.data.architecture}</p>
-            <ArchitectureDiagram
-              nodes={project.data.architectureNodes ?? project.data.tech.slice(0, 4)}
-              accent={project.data.accent}
-              class="mt-4 aspect-[16/9]"
-            />
+            {project.id === "merchantguard" ? (
+              <MerchantGuardArchitecture />
+            ) : (
+              <ArchitectureDiagram
+                nodes={project.data.architectureNodes ?? project.data.tech.slice(0, 4)}
+                accent={project.data.accent}
+                class="mt-4 aspect-[16/9]"
+              />
+            )}
           </section>
         )}
 
